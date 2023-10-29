@@ -2,6 +2,9 @@ module com.shop {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
+    requires java.sql;
 
 
     opens com.shop to javafx.fxml;

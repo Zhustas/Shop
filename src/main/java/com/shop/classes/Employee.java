@@ -1,5 +1,6 @@
 package com.shop.classes;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "Employees")
 public class Employee extends User {
-    private LocalDate employmentDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private LocalDate employmentDate;   // Mandatory
+    private double salary;              // Mandatory
+    private int administratorID;        // Mandatory
 }
