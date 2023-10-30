@@ -1,5 +1,7 @@
 package com.shop.classes;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Customer extends User {
-    private long ID;                       // Primary key
-
-    private long userID;                   // Foreign key
     private LocalDate registrationDate;    // Mandatory
 
     public Customer(String name, String lastName, String email, String username, String password, LocalDate birthDate, String phoneNumber, String address, LocalDate registrationDate) {
@@ -25,7 +25,6 @@ public class Customer extends User {
     @Override
     public String toString() {
         return "Customer{" +
-                "registrationDate=" + registrationDate +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -34,6 +33,7 @@ public class Customer extends User {
                 ", birthDate=" + birthDate +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
+                "registrationDate=" + registrationDate +
                 '}';
     }
 }

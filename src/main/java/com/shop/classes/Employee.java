@@ -1,5 +1,6 @@
 package com.shop.classes;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Employee extends User {
-    private long ID;                            // Primary key
-
-    private long userID;                        // Foreign key
     private long employedByAdministratorID;     // Foreign key
     private double salary;                      // Mandatory
     private LocalDate employmentDate;           // Mandatory

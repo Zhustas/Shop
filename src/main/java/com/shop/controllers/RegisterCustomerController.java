@@ -2,6 +2,9 @@ package com.shop.controllers;
 
 import com.shop.StartGUI;
 import com.shop.classes.Customer;
+import com.shop.classes.User;
+import hibernateControllers.UserHib;
+import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -32,8 +35,22 @@ public class RegisterCustomerController {
     @FXML
     private TextField addressField;
 
+    private EntityManagerFactory entityManagerFactory;
+    private UserHib userHib;
+
+    public void setData(EntityManagerFactory entityManagerFactory){
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    public void createUser(){
+        Customer customer = new Customer(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), birthDateField.getValue(), phoneNumberField.getText(), addressField.getText(), LocalDate.now());
+        userHib = new UserHib(entityManagerFactory);
+        userHib.createUser(customer);
+    }
+
     public void printNewCustomer(){
         Customer customer = new Customer(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), birthDateField.getValue(), phoneNumberField.getText(), addressField.getText(), LocalDate.now());
+
         System.out.println(customer);
     }
 

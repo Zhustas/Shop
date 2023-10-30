@@ -1,5 +1,6 @@
 package com.shop.classes;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Administrator extends User {
-    private long ID;                                  // Primary key
-
-    private long userID;                              // Foreign key
     private double salary;                            // Mandatory
 }

@@ -1,9 +1,11 @@
 package com.shop.classes;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 
@@ -11,13 +13,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "Users")
 public abstract class User {
-    private long ID;               // Primary key
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;                 // Primary key
 
+    @Column(nullable = false)
     protected String name;           // Mandatory
+    @Column(nullable = false)
     protected String lastName;       // Mandatory
+    @Column(nullable = false)
     protected String email;          // Mandatory
+    @Column(unique = true, nullable = false)
     protected String username;       // Mandatory
+    @Column(nullable = false)
     protected String password;       // Mandatory
 
     protected LocalDate birthDate;
