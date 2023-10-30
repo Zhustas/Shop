@@ -13,6 +13,7 @@ public class StartGUI extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Login");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

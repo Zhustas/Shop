@@ -1,7 +1,5 @@
 package com.shop.classes;
 
-import jakarta.persistence.Column;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +17,16 @@ public abstract class User {
     private LocalDate birthDate;
     private String email;          // Mandatory
     private String phoneNumber;
-    @Column(unique = true)
     private String username;       // Mandatory
     private String password;       // Mandatory
     private String userType;       // Mandatory
+
+    public User(String name, String lastName, String email, String username, String password, String userType) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+    }
 }

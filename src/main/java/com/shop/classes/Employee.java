@@ -12,11 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "Employees")
 public class Employee extends User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private LocalDate employmentDate;   // Mandatory

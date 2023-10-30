@@ -12,11 +12,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "Administrators")
 public class Administrator {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 //    @ManyToMany
