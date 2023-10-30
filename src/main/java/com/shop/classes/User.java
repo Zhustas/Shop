@@ -14,13 +14,24 @@ import java.time.LocalDate;
 public abstract class User {
     private long ID;               // Primary key
 
-    private String name;           // Mandatory
-    private String lastName;       // Mandatory
-    private String email;          // Mandatory
-    private String username;       // Mandatory
-    private String password;       // Mandatory
+    protected String name;           // Mandatory
+    protected String lastName;       // Mandatory
+    protected String email;          // Mandatory
+    protected String username;       // Mandatory
+    protected String password;       // Mandatory
 
-    private LocalDate birthDate;
-    private String phoneNumber;
-    private String address;
+    protected LocalDate birthDate;
+    protected String phoneNumber;
+    protected String address;
+
+    public User(String name, String lastName, String email, String username, String password, LocalDate birthDate, String phoneNumber, String address) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }

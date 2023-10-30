@@ -1,25 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.RegisterCustomerController">
-   <Text layoutX="68.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-   <Text layoutX="68.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name" />
-   <TextField fx:id="nameField" layoutX="68.0" layoutY="73.0" />
-   <TextField fx:id="lastNameField" layoutX="68.0" layoutY="141.0" />
-   <DatePicker fx:id="birthDateField" layoutX="56.0" layoutY="205.0" />
-   <Text layoutX="58.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date" />
-   <Text layoutX="56.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-   <Text layoutX="56.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number" />
-   <TextField fx:id="emailField" layoutX="56.0" layoutY="267.0" />
-   <TextField fx:id="phoneNumberField" layoutX="56.0" layoutY="335.0" />
-   <Text layoutX="361.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-   <Text layoutX="361.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-   <TextField fx:id="usernameField" layoutX="361.0" layoutY="85.0" />
-   <TextField fx:id="passwordField" layoutX="361.0" layoutY="153.0" />
-   <Button layoutX="526.0" layoutY="348.0" mnemonicParsing="false" onAction="#printNewUser" text="Button" />
+<AnchorPane prefHeight="624.0" prefWidth="600.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.RegisterCustomerController">
+   <Text fill="#fff21f" layoutX="26.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></Text>
+   <TextField fx:id="nameField" layoutX="24.0" layoutY="116.0" promptText="Enter name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="lastNameField" layoutX="24.0" layoutY="189.0" promptText="Enter last name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <DatePicker fx:id="birthDateField" layoutX="24.0" layoutY="360.0" prefHeight="35.0" prefWidth="215.0" />
+   <TextField fx:id="emailField" layoutX="24.0" layoutY="260.0" prefHeight="34.0" prefWidth="254.0" promptText="Enter email">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="phoneNumberField" layoutX="24.0" layoutY="432.0">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="usernameField" layoutX="313.0" layoutY="116.0" promptText="Enter username">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <Text fill="#fff21f" layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New customer registration">
+      <font>
+         <Font name="Impact" size="45.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="26.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#ff2121" layoutX="70.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="26.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="315.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="315.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="315.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Repeat  password">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="26.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="26.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <Text fill="#fff21f" layoutX="26.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Text>
+   <TextField fx:id="addressField" layoutX="24.0" layoutY="498.0" prefHeight="34.0" prefWidth="315.0">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </TextField>
+   <Button layoutX="513.0" layoutY="576.0" mnemonicParsing="false" onAction="#printNewCustomer" style="-fx-background-color: #fff21f;" text="Create">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <Button layoutX="18.0" layoutY="576.0" mnemonicParsing="false" onAction="#loadLoginPage" style="-fx-background-color: #fff21f;" text="Return">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <Text fill="#ff2121" layoutX="101.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <Text fill="#ff2121" layoutX="65.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <Text fill="#ff2121" layoutX="390.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <Text fill="#ff2121" layoutX="386.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <Text fill="#ff2121" layoutX="447.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <font>
+         <Font name="Calibri" size="25.0" />
+      </font>
+   </Text>
+   <PasswordField fx:id="passwordField" layoutX="313.0" layoutY="189.0" promptText="Enter password">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </PasswordField>
+   <PasswordField fx:id="repeatPasswordField" layoutX="313.0" layoutY="260.0" promptText="Enter password again">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </PasswordField>
 </AnchorPane>

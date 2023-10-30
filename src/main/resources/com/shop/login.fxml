@@ -8,28 +8,28 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="370.0" style="-fx-background-color: #49566b; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.LoginController">
-   <Text fill="#fff21f" layoutX="37.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="370.0" style="-fx-background-color: #49566b; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.LoginController">
+   <Text fill="#fff21f" layoutX="35.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
       <font>
          <Font name="Calibri" size="18.0" />
       </font>
    </Text>
-   <Text fill="#fff21f" layoutX="37.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+   <Text fill="#fff21f" layoutX="35.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
       <font>
          <Font name="Calibri" size="18.0" />
       </font>
    </Text>
-   <PasswordField fx:id="passwordField" layoutX="35.0" layoutY="230.0" prefHeight="37.0" prefWidth="226.0" promptText="Enter password">
+   <PasswordField fx:id="passwordField" layoutX="33.0" layoutY="211.0" prefHeight="37.0" prefWidth="226.0" promptText="Enter password">
       <font>
          <Font name="Calibri" size="20.0" />
       </font>
    </PasswordField>
-   <TextField fx:id="usernameField" layoutX="35.0" layoutY="138.0" prefHeight="40.0" prefWidth="226.0" promptText="Enter username">
+   <TextField fx:id="usernameField" layoutX="33.0" layoutY="119.0" prefHeight="40.0" prefWidth="226.0" promptText="Enter username">
       <font>
          <Font name="Calibri" size="20.0" />
       </font>
    </TextField>
-   <Button layoutX="292.0" layoutY="352.0" mnemonicParsing="false" onAction="#printInformation" style="-fx-background-color: #fff21f;" text="Login">
+   <Button layoutX="292.0" layoutY="308.0" mnemonicParsing="false" onAction="#printInformation" style="-fx-background-color: #fff21f;" text="Login">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
@@ -42,7 +42,7 @@
          <Font name="Impact" size="45.0" />
       </font>
    </Text>
-   <Button layoutX="14.0" layoutY="352.0" mnemonicParsing="false" onAction="#loadCustomerRegistrationPage" style="-fx-background-color: #fff21f;" text="Register as customer">
+   <Button layoutX="14.0" layoutY="308.0" mnemonicParsing="false" onAction="#loadCustomerRegistrationPage" style="-fx-background-color: #fff21f;" text="Register as customer">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
