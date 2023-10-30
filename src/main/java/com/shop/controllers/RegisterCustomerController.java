@@ -2,10 +2,9 @@ package com.shop.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
-public class RegisterController {
+public class RegisterCustomerController {
     @FXML
     private TextField nameField;
     @FXML
@@ -20,10 +19,7 @@ public class RegisterController {
     private TextField usernameField;
     @FXML
     private TextField passwordField;
-    @FXML
-    private RadioButton customerRadioButton;
-    @FXML
-    private RadioButton administratorRadioButton;
+
     public void printNewUser(){
 
     }

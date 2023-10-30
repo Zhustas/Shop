@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Customer extends User {
+    private long ID;                       // Primary key
+
+    private long userID;                   // Foreign key
     private LocalDate registrationDate;    // Mandatory
-    private String address;
-
-
 }
