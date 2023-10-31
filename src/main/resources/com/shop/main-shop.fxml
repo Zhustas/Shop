@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.shop.controllers.MainShopController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="717.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.MainShopController">
+   <children>
+      <Button layoutX="340.0" layoutY="235.0" mnemonicParsing="false" onAction="#printUser" text="Click me!" />
+      <MenuBar style="-fx-border-width: 2; -fx-padding: 2; -fx-background-color: #49566b;">
+        <menus>
+          <Menu mnemonicParsing="false" style="-fx-background-color: #6698e8; -fx-padding: 10; -fx-font-size: 18; -fx-font-family: Calibri; -fx-cursor: hand;" text="Account" />
+            <Menu mnemonicParsing="false" style="-fx-background-color: #6698e8; -fx-padding: 10; -fx-font-size: 18; -fx-font-family: Calibri; -fx-cursor: hand;" text="Account" />
+        </menus>
+      </MenuBar>
+      <Line endX="90.0" layoutX="891.0" layoutY="121.0" startX="47.0" strokeWidth="2.0" />
+      <Ellipse fill="WHITE" layoutX="949.0" layoutY="132.0" radiusX="7.0" radiusY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Ellipse fill="WHITE" layoutX="971.0" layoutY="132.0" radiusX="7.0" radiusY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Line endX="36.0" endY="-33.0" layoutX="894.0" layoutY="120.0" startX="44.0" strokeWidth="2.0" />
+      <Line endX="100.0" layoutX="830.0" layoutY="86.0" startX="91.0" strokeWidth="2.0" />
+      <Line endX="84.0" layoutX="892.0" layoutY="109.0" startX="44.0" strokeWidth="2.0" />
+      <Line endX="50.0" endY="-15.0" layoutX="933.0" layoutY="108.0" startX="44.0" strokeWidth="2.0" />
+      <Line endX="97.0" layoutX="886.0" layoutY="92.0" startX="66.0" strokeWidth="2.0" />
+      <Button layoutX="904.0" layoutY="65.0" mnemonicParsing="false" onAction="#printSMT" prefHeight="91.0" prefWidth="104.0" style="-fx-background-color: transparent;" />
+   </children>
 </AnchorPane>
