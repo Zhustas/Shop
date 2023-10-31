@@ -12,4 +12,5 @@ module com.shop {
     exports com.shop.controllers;
     opens com.shop.controllers to javafx.fxml;
     opens com.shop.classes to org.hibernate.orm.core;
+    exports com.shop.classes;
 }

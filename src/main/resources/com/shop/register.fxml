@@ -44,7 +44,7 @@
          <Font name="Calibri" size="18.0" />
       </font>
    </TextField>
-   <Button layoutX="584.0" layoutY="576.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: #fff21f;" text="Create">
+   <Button layoutX="584.0" layoutY="576.0" mnemonicParsing="false" onAction="#createUser" style="-fx-background-color: #fff21f;" text="Create">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>

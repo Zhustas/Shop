@@ -58,7 +58,9 @@ public class RegisterController {
     private EntityManagerFactory entityManagerFactory;
 
     public void setData(EntityManagerFactory entityManagerFactory){
-        this.entityManagerFactory = entityManagerFactory;
+        if (this.entityManagerFactory == null){
+            this.entityManagerFactory = entityManagerFactory;
+        }
     }
 
     public void openAdministratorFields(){
@@ -81,47 +83,47 @@ public class RegisterController {
 
     private boolean suitableToCreate(){
         if (nameField.getText().isEmpty()){ // Name is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Name should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Name field", "Name should not be empty.");
             return false;
         }
         if (lastNameField.getText().isEmpty()){ // Last name is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Last name should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Last name field", "Last name should not be empty.");
             return false;
         }
         if (emailField.getText().isEmpty()){ // Email is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Email should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Email field", "Email should not be empty.");
             return false;
         }
         if (usernameField.getText().isEmpty()){ // Username is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Username should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Username field", "Username should not be empty.");
             return false;
         }
         if (passwordField.getText().isEmpty()){ // Password is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password field", "Password should not be empty.");
             return false;
         }
         if (!passwordField.getText().equals(repeatPasswordField.getText())){ // Passwords do not match
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password fields", "Passwords do not match.");
             return false;
         }
         if (administratorRButton.isSelected() && academicDegreeField.getText().isEmpty()){ // Academic degree is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Academic degree should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Academic degree field", "Academic degree should not be empty.");
             return false;
         }
         if (administratorRButton.isSelected() && salaryField.getText().isEmpty()){ // Salary is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary should not be empty.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should not be empty.");
             return false;
         }
         double salary;
-        if (administratorRButton.isSelected()){ // Salary is not numeric
+        if (administratorRButton.isSelected()){ // Salary is not numeric and lower than 0
             try {
                 salary = Double.parseDouble(salaryField.getText());
             } catch (NumberFormatException e){
-                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Wrong number in salary field.");
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Wrong number.");
                 return false;
             }
             if (salary <= 0.0){
-                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary should be higher than 0.");
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should be higher than 0.");
                 return false;
             }
         }
@@ -129,7 +131,7 @@ public class RegisterController {
         return true;
     }
 
-    public void create(){
+    public void createUser(){
         if (!suitableToCreate()){
             return;
         }
@@ -141,7 +143,6 @@ public class RegisterController {
         if (address.isEmpty()){
             address = null;
         }
-
         String phoneNumber = phoneNumberField.getText();
         if (phoneNumber.isEmpty()){
             phoneNumber = null;

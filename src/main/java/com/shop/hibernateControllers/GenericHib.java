@@ -1,5 +1,6 @@
 package com.shop.hibernateControllers;
 
+import com.shop.classes.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
