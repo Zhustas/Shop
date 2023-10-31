@@ -1,0 +1,171 @@
+package com.shop.controllers;
+
+import com.shop.Utils.Utils;
+import com.shop.StartGUI;
+import com.shop.classes.Administrator;
+import com.shop.classes.Customer;
+import com.shop.classes.User;
+import com.shop.hibernateControllers.GenericHib;
+import jakarta.persistence.EntityManagerFactory;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.time.LocalDate;
+
+public class RegisterController {
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField passwordField;
+    @FXML
+    private TextField repeatPasswordField;
+    @FXML
+    private DatePicker birthDateField;
+    @FXML
+    private TextField phoneNumberField;
+    @FXML
+    private TextField addressField;
+    @FXML
+    private ToggleGroup userType;
+    @FXML
+    private RadioButton customerRButton;
+    @FXML
+    private RadioButton administratorRButton;
+
+    @FXML
+    private Label academicDegreeLabel;
+    @FXML
+    private Label academicDegreeRed;
+    @FXML
+    private TextField academicDegreeField;
+    @FXML
+    private Label salaryLabel;
+    @FXML
+    private Label salaryRed;
+    @FXML
+    private TextField salaryField;
+
+    private EntityManagerFactory entityManagerFactory;
+
+    public void setData(EntityManagerFactory entityManagerFactory){
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    public void openAdministratorFields(){
+        academicDegreeLabel.setVisible(true);
+        academicDegreeRed.setVisible(true);
+        academicDegreeField.setVisible(true);
+        salaryLabel.setVisible(true);
+        salaryRed.setVisible(true);
+        salaryField.setVisible(true);
+    }
+
+    public void closeAdministratorFields(){
+        academicDegreeLabel.setVisible(false);
+        academicDegreeRed.setVisible(false);
+        academicDegreeField.setVisible(false);
+        salaryLabel.setVisible(false);
+        salaryRed.setVisible(false);
+        salaryField.setVisible(false);
+    }
+
+    private boolean suitableToCreate(){
+        if (nameField.getText().isEmpty()){ // Name is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Name should not be empty.");
+            return false;
+        }
+        if (lastNameField.getText().isEmpty()){ // Last name is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Last name should not be empty.");
+            return false;
+        }
+        if (emailField.getText().isEmpty()){ // Email is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Email should not be empty.");
+            return false;
+        }
+        if (usernameField.getText().isEmpty()){ // Username is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Username should not be empty.");
+            return false;
+        }
+        if (passwordField.getText().isEmpty()){ // Password is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password should not be empty.");
+            return false;
+        }
+        if (!passwordField.getText().equals(repeatPasswordField.getText())){ // Passwords do not match
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
+            return false;
+        }
+        if (administratorRButton.isSelected() && academicDegreeField.getText().isEmpty()){ // Academic degree is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Academic degree should not be empty.");
+            return false;
+        }
+        if (administratorRButton.isSelected() && salaryField.getText().isEmpty()){ // Salary is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary should not be empty.");
+            return false;
+        }
+        double salary;
+        if (administratorRButton.isSelected()){ // Salary is not numeric
+            try {
+                salary = Double.parseDouble(salaryField.getText());
+            } catch (NumberFormatException e){
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Wrong number in salary field.");
+                return false;
+            }
+            if (salary <= 0.0){
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary should be higher than 0.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void create(){
+        if (!suitableToCreate()){
+            return;
+        }
+
+        User user;
+        String type;
+
+        String address = addressField.getText();
+        if (address.isEmpty()){
+            address = null;
+        }
+
+        String phoneNumber = phoneNumberField.getText();
+        if (phoneNumber.isEmpty()){
+            phoneNumber = null;
+        }
+
+        if (customerRButton.isSelected()){
+            type = customerRButton.getText();
+            user = new Customer(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), type, birthDateField.getValue(), phoneNumber, address, LocalDate.now());
+        } else {
+            double salary = Double.parseDouble(salaryField.getText());
+            type = administratorRButton.getText();
+            user = new Administrator(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), type, birthDateField.getValue(), phoneNumber, address, academicDegreeField.getText(), salary);
+        }
+
+        GenericHib genericHib = new GenericHib(entityManagerFactory);
+        genericHib.create(user);
+    }
+
+    public void loadLoginPage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) nameField.getScene().getWindow(); // Getting current stage, so that scene would be drawn on top of it
+        stage.setTitle("Login");
+        stage.setScene(scene);
+        stage.show();
+    }
+}

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="624.0" prefWidth="671.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.RegisterController">
+   <TextField fx:id="nameField" layoutX="24.0" layoutY="116.0" promptText="Enter name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="lastNameField" layoutX="24.0" layoutY="189.0" promptText="Enter last name">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <DatePicker fx:id="birthDateField" layoutX="24.0" layoutY="360.0" prefHeight="35.0" prefWidth="215.0" />
+   <TextField fx:id="emailField" layoutX="24.0" layoutY="260.0" prefHeight="34.0" prefWidth="254.0" promptText="Enter email">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="phoneNumberField" layoutX="24.0" layoutY="432.0">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <TextField fx:id="usernameField" layoutX="378.0" layoutY="115.0" promptText="Enter username">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font></TextField>
+   <Text fill="#fff21f" layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New registration">
+      <font>
+         <Font name="Impact" size="45.0" />
+      </font>
+   </Text>
+   <TextField fx:id="addressField" layoutX="24.0" layoutY="498.0" prefHeight="34.0" prefWidth="315.0">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </TextField>
+   <Button layoutX="584.0" layoutY="576.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: #fff21f;" text="Create">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <Button layoutX="18.0" layoutY="576.0" mnemonicParsing="false" onAction="#loadLoginPage" style="-fx-background-color: #fff21f;" text="Return">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <PasswordField fx:id="passwordField" layoutX="378.0" layoutY="188.0" promptText="Enter password">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </PasswordField>
+   <PasswordField fx:id="repeatPasswordField" layoutX="378.0" layoutY="259.0" promptText="Enter password again">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </PasswordField>
+   <RadioButton fx:id="customerRButton" layoutX="385.0" layoutY="350.0" mnemonicParsing="false" onAction="#closeAdministratorFields" selected="true" text="Customer" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="14.0" />
+      </font>
+      <toggleGroup>
+         <ToggleGroup fx:id="userType" />
+      </toggleGroup>
+   </RadioButton>
+   <RadioButton fx:id="administratorRButton" layoutX="488.0" layoutY="350.0" mnemonicParsing="false" onAction="#openAdministratorFields" text="Administrator" textFill="#fff21f" toggleGroup="$userType">
+      <font>
+         <Font name="Calibri" size="14.0" />
+      </font>
+   </RadioButton>
+   <TextField fx:id="academicDegreeField" layoutX="375.0" layoutY="429.0" prefHeight="34.0" prefWidth="271.0" visible="false">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </TextField>
+   <TextField fx:id="salaryField" layoutX="374.0" layoutY="495.0" prefHeight="34.0" prefWidth="155.0" visible="false">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </TextField>
+   <Label fx:id="academicDegreeLabel" layoutX="374.0" layoutY="404.0" text="Academic degree" textFill="#fff21f" visible="false">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label fx:id="salaryLabel" layoutX="374.0" layoutY="470.0" text="Salary" textFill="#fff21f" visible="false">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="89.0" text="Name" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="160.0" text="Last name" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="233.0" text="Email" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="333.0" text="Birth date" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="404.0" text="Phone number" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="26.0" layoutY="470.0" text="Address" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="380.0" layoutY="88.0" text="Username" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="380.0" layoutY="160.0" text="Password" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="380.0" layoutY="233.0" text="Repeat password" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="380.0" layoutY="322.0" text="Register as" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="75.0" layoutY="85.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="101.0" layoutY="157.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="69.0" layoutY="230.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="460.0" layoutY="85.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="454.0" layoutY="157.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label fx:id="academicDegreeRed" layoutX="505.0" layoutY="401.0" text="*" textFill="#f52424" visible="false">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="511.0" layoutY="230.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label fx:id="salaryRed" layoutX="420.0" layoutY="467.0" text="*" textFill="#f52424" visible="false">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+</AnchorPane>

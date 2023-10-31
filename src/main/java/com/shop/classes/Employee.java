@@ -2,7 +2,6 @@ package com.shop.classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +14,33 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "Employees")
 public class Employee extends User {
-    @Column(nullable = false)
-    private long employedByUserID;              // Mandatory
-    @Column(nullable = false)
-    private double salary;                      // Mandatory
-    @Column(nullable = false)
-    private LocalDate employmentDate;           // Mandatory
+    private LocalDate employmentDate;
+    private long employedByID;
+    private double salary;
+
+    public Employee(String name, String lastName, String email, String username, String password, String userType, LocalDate birthDate, String phoneNumber, String address, LocalDate employmentDate, long employedByID, double salary) {
+        super(name, lastName, email, username, password, userType, birthDate, phoneNumber, address);
+        this.employmentDate = employmentDate;
+        this.employedByID = employedByID;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", userType='" + userType + '\'' +
+                ", birthDate=" + birthDate +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", employmentDate=" + employmentDate +
+                ", employedByID=" + employedByID +
+                ", salary=" + salary +
+                '}';
+    }
 }

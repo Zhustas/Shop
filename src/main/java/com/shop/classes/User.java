@@ -14,33 +14,30 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "Users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;                 // Primary key
 
-    @Column(nullable = false)
     protected String name;           // Mandatory
-    @Column(nullable = false)
     protected String lastName;       // Mandatory
-    @Column(nullable = false)
     protected String email;          // Mandatory
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     protected String username;       // Mandatory
-    @Column(nullable = false)
     protected String password;       // Mandatory
+    protected String userType;       // Mandatory
 
     protected LocalDate birthDate;
     protected String phoneNumber;
     protected String address;
 
-    public User(String name, String lastName, String email, String username, String password, LocalDate birthDate, String phoneNumber, String address) {
+    public User(String name, String lastName, String email, String username, String password, String userType, LocalDate birthDate, String phoneNumber, String address) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.userType = userType;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.address = address;

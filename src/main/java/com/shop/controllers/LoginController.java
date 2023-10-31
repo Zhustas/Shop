@@ -28,13 +28,13 @@ public class LoginController implements Initializable {
         System.out.println(usernameField.getText() + " " + passwordField.getText());
     }
 
-    public void loadCustomerRegistrationPage() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("registerCustomer.fxml"));
+    public void loadRegistrationPage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("register.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        RegisterCustomerController registerCustomerController = fxmlLoader.getController();
+        RegisterController registerCustomerController = fxmlLoader.getController();
         registerCustomerController.setData(entityManagerFactory);
         Stage stage = (Stage) usernameField.getScene().getWindow(); // Getting current stage, so that scene would be drawn on top of it
-        stage.setTitle("Register as Customer");
+        stage.setTitle("Register");
         stage.setScene(scene);
         stage.show();
     }
