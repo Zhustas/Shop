@@ -1,22 +1,21 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
-import com.shop.StartGUI;
 import com.shop.classes.Administrator;
 import com.shop.classes.Customer;
 import com.shop.classes.User;
 import com.shop.hibernateControllers.CRUDHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class RegisterController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private TextField nameField;
     @FXML
@@ -35,8 +34,6 @@ public class RegisterController {
     private TextField phoneNumberField;
     @FXML
     private TextField addressField;
-    @FXML
-    private ToggleGroup userType;
     @FXML
     private RadioButton customerRButton;
     @FXML
@@ -162,11 +159,6 @@ public class RegisterController {
     }
 
     public void loadLoginPage() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) nameField.getScene().getWindow(); // Getting current stage, so that scene would be drawn on top of it
-        stage.setTitle("Login");
-        stage.setScene(scene);
-        stage.show();
+        Utils.loadLoginPage(anchorPane);
     }
 }

@@ -1,20 +1,17 @@
 package com.shop.controllers;
 
-import com.shop.StartGUI;
 import com.shop.Utils.Utils;
 import com.shop.classes.User;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 public class MainShopController {
     @FXML
-    private Button accountButton;
+    private AnchorPane anchorPane;
     User user;
     private EntityManagerFactory entityManagerFactory;
     public void setData(EntityManagerFactory entityManagerFactory, User user){
@@ -23,13 +20,15 @@ public class MainShopController {
     }
 
     public void loadAccountPage() throws IOException {
-        FXMLLoader fxmlLoader = Utils.getFXMLLoader("account-page.fxml");
-        Scene scene = new Scene(fxmlLoader.load());
-        AccountPageController accountPageController = fxmlLoader.getController();
-        accountPageController.setData(entityManagerFactory, user);
-        Stage stage = (Stage) accountButton.getScene().getWindow();
-        stage.setTitle("Shop (account)");
-        stage.setScene(scene);
-        stage.show();
+        Utils.loadAccountPage(entityManagerFactory, user, anchorPane);
+    }
+
+    public void check(){
+        if (Utils.generateDialogBox(Alert.AlertType.CONFIRMATION, "a", "b", "c")){
+            System.out.println("LOL");
+        } else {
+            System.out.println("NOT LOL");
+        }
+        System.out.println(user);
     }
 }

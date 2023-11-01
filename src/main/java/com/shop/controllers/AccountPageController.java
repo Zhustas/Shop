@@ -1,6 +1,5 @@
 package com.shop.controllers;
 
-import com.shop.StartGUI;
 import com.shop.Utils.Utils;
 import com.shop.classes.Administrator;
 import com.shop.classes.Customer;
@@ -9,15 +8,14 @@ import com.shop.classes.User;
 import com.shop.hibernateControllers.CRUDHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class AccountPageController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private TextField nameField;
     @FXML
@@ -136,8 +134,12 @@ public class AccountPageController {
     }
 
     public void updateUser() {
+        if (!suitableToCreate()){
+            return;
+        }
+
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
-        // TO DO: Check if all values are correct
+
         setNewUserFromFields();
 
         try {
@@ -163,8 +165,28 @@ public class AccountPageController {
         user.setUsername(usernameField.getText());
         user.setPassword(passwordField.getText());
         user.setBirthDate(birthDateField.getValue());
-        user.setPhoneNumber(phoneNumberField.getText());
-        user.setAddress(addressField.getText());
+
+        String address = addressField.getText();
+        if (address != null){
+            if (address.isEmpty()){
+                user.setAddress(null);
+            } else {
+                user.setAddress(address);
+            }
+        } else {
+            user.setAddress(null);
+        }
+
+        String phoneNumber = phoneNumberField.getText();
+        if (phoneNumber != null){
+            if (phoneNumber.isEmpty()){
+                user.setPhoneNumber(null);
+            } else {
+                user.setPhoneNumber(phoneNumber);
+            }
+        } else {
+            user.setPhoneNumber(null);
+        }
 
         if (isType("Customer")) {
             customer = (Customer) user;
@@ -180,7 +202,58 @@ public class AccountPageController {
         }
     }
 
+    private boolean suitableToCreate(){
+        if (nameField.getText().isEmpty()){ // Name is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Name field", "Name should not be empty.");
+            return false;
+        }
+        if (lastNameField.getText().isEmpty()){ // Last name is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Last name field", "Last name should not be empty.");
+            return false;
+        }
+        if (emailField.getText().isEmpty()){ // Email is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Email field", "Email should not be empty.");
+            return false;
+        }
+        if (usernameField.getText().isEmpty()){ // Username is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Username field", "Username should not be empty.");
+            return false;
+        }
+        if (passwordField.getText().isEmpty()){ // Password is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password field", "Password should not be empty.");
+            return false;
+        }
+
+        if (isType("Administrator") && academicDegreeField.getText().isEmpty()){ // Academic degree is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Academic degree field", "Academic degree should not be empty.");
+            return false;
+        }
+        if (isType("Administrator") && salaryField.getText().isEmpty()){ // Salary is empty
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should not be empty.");
+            return false;
+        }
+        double salary;
+        if (isType("Administrator")){ // Salary is not numeric and lower than 0
+            try {
+                salary = Double.parseDouble(salaryField.getText());
+            } catch (NumberFormatException e){
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Wrong number.");
+                return false;
+            }
+            if (salary <= 0.0){
+                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should be higher than 0.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void deleteUser(){
+        if (!Utils.generateDialogBox(Alert.AlertType.CONFIRMATION, "Confirm", "Confirm deletion", "Are you sure you want to delete user?")){
+            return;
+        }
+
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
 
         try {
@@ -191,7 +264,6 @@ public class AccountPageController {
             } else if (isType("Employee")) {
                 crudHib.delete(Employee.class, employee.getID());
             }
-            // TO DO: Add (Yes, No) option in dialog box
             Utils.generateAlert(Alert.AlertType.INFORMATION, "Success", "User delete", "User has been successfully deleted.");
             loadLoginPage();
         } catch (Exception e){
@@ -200,11 +272,10 @@ public class AccountPageController {
     }
 
     private void loadLoginPage() throws IOException {
-        FXMLLoader fxmlLoader = Utils.getFXMLLoader("login.fxml");
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) nameField.getScene().getWindow();
-        stage.setTitle("Login");
-        stage.setScene(scene);
-        stage.show();
+        Utils.loadLoginPage(anchorPane);
+    }
+
+    public void loadMainShopPage() throws IOException {
+        Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
     }
 }

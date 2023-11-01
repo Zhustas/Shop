@@ -6,11 +6,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="607.0" prefWidth="933.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.AccountPageController">
+<AnchorPane fx:id="anchorPane" prefHeight="607.0" prefWidth="933.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.AccountPageController">
    <children>
       <TextField fx:id="passwordField" layoutX="339.0" layoutY="225.0">
          <font>
@@ -113,7 +113,7 @@
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Label>
-      <Text fill="#fff21f" layoutX="278.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account information">
+      <Text fill="#fff21f" layoutX="278.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account information">
          <font>
             <Font name="Impact" size="45.0" />
          </font>
@@ -184,5 +184,25 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </Button>
+      <Pane prefHeight="41.0" prefWidth="933.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Button fx:id="accountButton" layoutX="114.0" layoutY="7.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="76.0" style="-fx-background-color: #5089e6;" text="Account">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Calibri" size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#loadMainShopPage" prefHeight="28.0" prefWidth="76.0" style="-fx-background-color: #5089e6;" text="Main">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Calibri" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
