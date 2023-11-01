@@ -38,4 +38,22 @@ public class UtilsHib {
             }
         }
     }
+
+    public <T> T getEntityById(Class<T> entityClass, long ID){
+        T result = null;
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            result = em.find(entityClass, ID);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error in getting entity by ID");
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        }
+        return result;
+    }
 }

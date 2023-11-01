@@ -5,7 +5,7 @@ import com.shop.StartGUI;
 import com.shop.classes.Administrator;
 import com.shop.classes.Customer;
 import com.shop.classes.User;
-import com.shop.hibernateControllers.GenericHib;
+import com.shop.hibernateControllers.CRUDHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -157,8 +157,8 @@ public class RegisterController {
             user = new Administrator(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), type, birthDateField.getValue(), phoneNumber, address, academicDegreeField.getText(), salary);
         }
 
-        GenericHib genericHib = new GenericHib(entityManagerFactory);
-        genericHib.create(user);
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        crudHib.create(user);
     }
 
     public void loadLoginPage() throws IOException {
