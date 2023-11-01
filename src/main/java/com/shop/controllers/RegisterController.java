@@ -26,9 +26,9 @@ public class RegisterController {
     @FXML
     private TextField usernameField;
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
     @FXML
-    private TextField repeatPasswordField;
+    private PasswordField repeatPasswordField;
     @FXML
     private DatePicker birthDateField;
     @FXML
