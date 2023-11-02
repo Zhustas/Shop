@@ -4,6 +4,7 @@ import com.shop.StartGUI;
 import com.shop.classes.User;
 import com.shop.controllers.AccountPageController;
 import com.shop.controllers.MainShopController;
+import com.shop.controllers.ProductPageController;
 import com.shop.controllers.RegisterController;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXMLLoader;
@@ -73,6 +74,17 @@ public class Utils {
         accountPageController.setData(entityManagerFactory, user);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setTitle("Shop (account)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadProductPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("product-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        ProductPageController productPageController = fxmlLoader.getController();
+        productPageController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (product)");
         stage.setScene(scene);
         stage.show();
     }

@@ -23,6 +23,11 @@ public class MainShopController {
         Utils.loadAccountPage(entityManagerFactory, user, anchorPane);
     }
 
+    @FXML
+    private void loadProductPage() throws  IOException {
+        Utils.loadProductPage(entityManagerFactory, user, anchorPane);
+    }
+
     public void check(){
         if (Utils.generateDialogBox(Alert.AlertType.CONFIRMATION, "a", "b", "c")){
             System.out.println("LOL");

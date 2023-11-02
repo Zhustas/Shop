@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.util.List;
 
@@ -13,15 +15,12 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Product {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    private String title;
-    private double price;
-    private String manufacturer;
-    private String description;
 
-    @ManyToMany
-    private List<Warehouse> warehouseList;
+    @OneToMany(orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Product> itemsInCart;
 }

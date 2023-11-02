@@ -283,4 +283,9 @@ public class AccountPageController {
     public void loadMainShopPage() throws IOException {
         Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
     }
+
+    @FXML
+    private void loadProductPage() throws IOException {
+        Utils.loadProductPage(entityManagerFactory, user, anchorPane);
+    }
 }
