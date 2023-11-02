@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="624.0" prefWidth="671.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.RegisterController">
+<AnchorPane fx:id="anchorPane" prefHeight="624.0" prefWidth="671.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.RegisterController">
    <TextField fx:id="nameField" layoutX="24.0" layoutY="116.0" promptText="Enter name">
       <font>
          <Font name="Calibri" size="18.0" />
@@ -21,7 +21,7 @@
       <font>
          <Font name="Calibri" size="18.0" />
       </font></TextField>
-   <DatePicker fx:id="birthDateField" layoutX="24.0" layoutY="360.0" prefHeight="35.0" prefWidth="215.0" />
+   <DatePicker fx:id="birthDateField" editable="false" layoutX="24.0" layoutY="360.0" prefHeight="35.0" prefWidth="215.0" />
    <TextField fx:id="emailField" layoutX="24.0" layoutY="260.0" prefHeight="34.0" prefWidth="254.0" promptText="Enter email">
       <font>
          <Font name="Calibri" size="18.0" />
@@ -193,4 +193,12 @@
          <Font name="Calibri Bold" size="24.0" />
       </font>
    </Label>
+   <Button layoutX="162.0" layoutY="327.0" mnemonicParsing="false" onAction="#clearBirthDateField" style="-fx-background-color: #fff21f;" text="Clear date">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="14.0" />
+      </font>
+   </Button>
 </AnchorPane>

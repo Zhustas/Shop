@@ -271,6 +271,11 @@ public class AccountPageController {
         }
     }
 
+    @FXML
+    private void clearBirthDateField(){
+        birthDateField.setValue(null);
+    }
+
     private void loadLoginPage() throws IOException {
         Utils.loadLoginPage(anchorPane);
     }

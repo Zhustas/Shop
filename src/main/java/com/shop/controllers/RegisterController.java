@@ -158,6 +158,11 @@ public class RegisterController {
         crudHib.create(user);
     }
 
+    @FXML
+    private void clearBirthDateField(){
+        birthDateField.setValue(null);
+    }
+
     public void loadLoginPage() throws IOException {
         Utils.loadLoginPage(anchorPane);
     }
