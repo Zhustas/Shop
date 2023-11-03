@@ -157,16 +157,24 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="740.0" layoutY="441.0" text="Warehouse" textFill="#fff21f">
+      <Label layoutX="739.0" layoutY="462.0" text="Warehouse" textFill="#fff21f">
          <font>
             <Font name="Calibri" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="826.0" layoutY="438.0" text="*" textFill="#f52424">
+      <Label layoutX="825.0" layoutY="459.0" text="*" textFill="#f52424">
          <font>
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="warehouseList" layoutX="738.0" layoutY="463.0" prefHeight="185.0" prefWidth="308.0" />
+      <ListView fx:id="warehouseList" layoutX="738.0" layoutY="487.0" prefHeight="161.0" prefWidth="308.0" />
+      <Button layoutX="893.0" layoutY="446.0" mnemonicParsing="false" onAction="#clearSelectedWarehouse" prefHeight="34.0" prefWidth="153.0" style="-fx-background-color: #fff21f;" text="Clear warehouse">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

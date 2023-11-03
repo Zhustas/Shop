@@ -8,6 +8,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UtilsHib {
     private EntityManagerFactory entityManagerFactory;
     public UtilsHib(EntityManagerFactory entityManagerFactory) {
@@ -37,6 +40,25 @@ public class UtilsHib {
                 em.close();
             }
         }
+    }
+
+    public <T> List<T> getAllRecords(Class<T> entityClass){
+        EntityManager em = null;
+        List<T> results = new ArrayList<>();
+        try {
+            em = getEntityManager();
+            CriteriaQuery<Object> query = em.getCriteriaBuilder().createQuery();
+            query.select(query.from(entityClass));
+            Query q = em.createQuery(query);
+            results = q.getResultList();
+        } catch (Exception e){
+            System.out.println("Error in getting all records.");
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        }
+        return results;
     }
 
     public <T> T getEntityById(Class<T> entityClass, long ID){
