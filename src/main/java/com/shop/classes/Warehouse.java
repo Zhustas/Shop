@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name = "Warehouses")
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +30,19 @@ public class Warehouse {
     @ManyToMany(mappedBy = "warehouseList")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Product> inStockProducts;
+
+    public Warehouse(String title, String city, String address) {
+        this.title = title;
+        this.city = city;
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "title='" + title + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

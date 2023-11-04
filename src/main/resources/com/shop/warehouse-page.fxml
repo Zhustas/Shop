@@ -12,164 +12,161 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="729.0" prefWidth="1190.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.WarehousePageController">
-   <children>
-      <TextField fx:id="leftTitleField" layoutX="28.0" layoutY="148.0" prefHeight="34.0" prefWidth="225.0" promptText="Enter title">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="30.0" layoutY="121.0" text="Title" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="66.0" layoutY="118.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="30.0" layoutY="261.0" text="Address" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="89.0" layoutY="258.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="leftCityField" layoutX="28.0" layoutY="217.0" prefHeight="34.0" prefWidth="225.0" promptText="Enter city">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="30.0" layoutY="190.0" text="City" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="186.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <Text fill="#fff21f" layoutX="53.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Warehouse" underline="true">
-         <font>
-            <Font name="Impact" size="36.0" />
-         </font>
-      </Text>
-      <TextField fx:id="leftAddressField" layoutX="28.0" layoutY="293.0" prefHeight="34.0" prefWidth="282.0" promptText="Enter address">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Button layoutX="26.0" layoutY="358.0" mnemonicParsing="false" onAction="#clearLeftFields" style="-fx-background-color: #eb2f42;" text="Clear fields">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="249.0" layoutY="358.0" mnemonicParsing="false" onAction="#createWarehouse" style="-fx-background-color: #17bf25;" text="Create">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Button>
-      <TableView fx:id="warehousesTable" layoutX="358.0" layoutY="119.0" prefHeight="591.0" prefWidth="474.0">
-        <columns>
-          <TableColumn prefWidth="124.0" text="Title" />
-          <TableColumn prefWidth="144.0" text="City" />
-            <TableColumn prefWidth="227.0" text="Address" />
-        </columns>
-      </TableView>
-      <TableView fx:id="employeesTable" layoutX="854.0" layoutY="118.0" prefHeight="279.0" prefWidth="315.0">
-        <columns>
-          <TableColumn prefWidth="98.0" text="Name" />
-          <TableColumn prefWidth="102.0" text="Last Name" />
-            <TableColumn prefWidth="114.0" text="Email" />
-        </columns>
-      </TableView>
-      <TableView fx:id="productsTable" layoutX="854.0" layoutY="419.0" prefHeight="290.0" prefWidth="315.0">
-         <columns>
-            <TableColumn prefWidth="86.0" text="Title" />
-            <TableColumn prefWidth="52.0" text="Price" />
-            <TableColumn prefWidth="176.0" text="Description" />
-         </columns>
-      </TableView>
-      <Text fill="#fff21f" layoutX="659.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All warehouses" underline="true">
-         <font>
-            <Font name="Impact" size="36.0" />
-         </font>
-      </Text>
-      <Line endX="-100.0" endY="-191.0" layoutX="438.0" layoutY="208.0" startX="-100.0" startY="211.0" stroke="#fff21f" strokeWidth="3.0" />
-      <Pane prefHeight="41.0" prefWidth="1190.0" style="-fx-background-color: #ffffff;" />
-      <Button layoutX="27.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteWarehouse" style="-fx-background-color: #eb2f42;" text="Delete">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="246.0" layoutY="681.0" mnemonicParsing="false" onAction="#updateWarehouse" style="-fx-background-color: #fff21f;" text="Update">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Button>
-      <TextField fx:id="rightTitleField" layoutX="28.0" layoutY="471.0" prefHeight="34.0" prefWidth="225.0">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="30.0" layoutY="444.0" text="Title" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="66.0" layoutY="441.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="30.0" layoutY="584.0" text="Address" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="89.0" layoutY="581.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="rightCityField" layoutX="28.0" layoutY="540.0" prefHeight="34.0" prefWidth="225.0">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="30.0" layoutY="513.0" text="City" textFill="#fff21f">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="509.0" text="*" textFill="#f52424">
-         <font>
-            <Font name="Calibri Bold" size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="rightAddressField" layoutX="28.0" layoutY="616.0" prefHeight="34.0" prefWidth="282.0">
-         <font>
-            <Font name="Calibri" size="16.0" />
-         </font>
-      </TextField>
-      <Line endX="-438.0" endY="211.0" layoutX="446.0" layoutY="208.0" startX="-109.0" startY="211.0" stroke="#fff21f" strokeWidth="3.0" />
-   </children>
+<AnchorPane prefHeight="729.0" prefWidth="1190.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.WarehousePageController">
+   <TextField fx:id="leftTitleField" layoutX="28.0" layoutY="148.0" prefHeight="34.0" prefWidth="225.0" promptText="Enter title">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Label layoutX="30.0" layoutY="121.0" text="Title" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="66.0" layoutY="118.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="30.0" layoutY="261.0" text="Address" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="89.0" layoutY="258.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <TextField fx:id="leftCityField" layoutX="28.0" layoutY="217.0" prefHeight="34.0" prefWidth="225.0" promptText="Enter city">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Label layoutX="30.0" layoutY="190.0" text="City" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="63.0" layoutY="186.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Text fill="#fff21f" layoutX="53.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Warehouse" underline="true">
+      <font>
+         <Font name="Impact" size="36.0" />
+      </font>
+   </Text>
+   <TextField fx:id="leftAddressField" layoutX="28.0" layoutY="293.0" prefHeight="34.0" prefWidth="282.0" promptText="Enter address">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Button layoutX="26.0" layoutY="358.0" mnemonicParsing="false" onAction="#clearLeftFields" style="-fx-background-color: #eb2f42;" text="Clear fields">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <Button layoutX="249.0" layoutY="358.0" mnemonicParsing="false" onAction="#createWarehouse" style="-fx-background-color: #17bf25;" text="Create">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <TableView fx:id="warehousesTable" layoutX="358.0" layoutY="119.0" onMouseClicked="#handleRowSelected" prefHeight="591.0" prefWidth="474.0">
+      <columns>
+         <TableColumn fx:id="warehousesColumnTitle" prefWidth="124.0" text="Title" />
+         <TableColumn fx:id="warehousesColumnCity" prefWidth="144.0" text="City" />
+         <TableColumn fx:id="warehousesColumnAddress" prefWidth="227.0" text="Address" />
+      </columns>
+   </TableView>
+   <TableView fx:id="employeesTable" layoutX="854.0" layoutY="118.0" prefHeight="279.0" prefWidth="315.0">
+      <columns>
+         <TableColumn prefWidth="98.0" text="Name" />
+         <TableColumn prefWidth="102.0" text="Last Name" />
+         <TableColumn prefWidth="114.0" text="Email" />
+      </columns>
+   </TableView>
+   <TableView fx:id="productsTable" layoutX="854.0" layoutY="419.0" prefHeight="290.0" prefWidth="315.0">
+      <columns>
+         <TableColumn prefWidth="86.0" text="Title" />
+         <TableColumn prefWidth="61.0" text="Price" />
+         <TableColumn prefWidth="167.0" text="Description" />
+      </columns>
+   </TableView>
+   <Text fill="#fff21f" layoutX="659.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All warehouses" underline="true">
+      <font>
+         <Font name="Impact" size="36.0" />
+      </font>
+   </Text>
+   <Line endX="-100.0" endY="-191.0" layoutX="438.0" layoutY="208.0" startX="-100.0" startY="211.0" stroke="#fff21f" strokeWidth="3.0" />
+   <Pane prefHeight="41.0" prefWidth="1190.0" style="-fx-background-color: #ffffff;" />
+   <Button layoutX="27.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteWarehouse" style="-fx-background-color: #eb2f42;" text="Delete">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <Button layoutX="246.0" layoutY="681.0" mnemonicParsing="false" onAction="#updateWarehouse" style="-fx-background-color: #fff21f;" text="Update">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Button>
+   <TextField fx:id="rightTitleField" layoutX="28.0" layoutY="471.0" prefHeight="34.0" prefWidth="225.0">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Label layoutX="30.0" layoutY="444.0" text="Title" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="66.0" layoutY="441.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="30.0" layoutY="584.0" text="Address" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="89.0" layoutY="581.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <TextField fx:id="rightCityField" layoutX="28.0" layoutY="540.0" prefHeight="34.0" prefWidth="225.0">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Label layoutX="30.0" layoutY="513.0" text="City" textFill="#fff21f">
+      <font>
+         <Font name="Calibri" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="63.0" layoutY="509.0" text="*" textFill="#f52424">
+      <font>
+         <Font name="Calibri Bold" size="24.0" />
+      </font>
+   </Label>
+   <TextField fx:id="rightAddressField" layoutX="28.0" layoutY="616.0" prefHeight="34.0" prefWidth="282.0">
+      <font>
+         <Font name="Calibri" size="16.0" />
+      </font>
+   </TextField>
+   <Line endX="-438.0" endY="211.0" layoutX="446.0" layoutY="208.0" startX="-109.0" startY="211.0" stroke="#fff21f" strokeWidth="3.0" />
 </AnchorPane>
