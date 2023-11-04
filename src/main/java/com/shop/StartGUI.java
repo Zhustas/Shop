@@ -21,4 +21,9 @@ public class StartGUI extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    // TODO:
+    //  employee page - NOT DONE
+    //  warehouse page - NOT DONE
+    //  product page - NOT DONE
 }
