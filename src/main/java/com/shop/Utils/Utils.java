@@ -17,6 +17,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Utils {
     public static void generateAlert(Alert.AlertType alertType, String title, String header, String content){
         Alert alert = new Alert(alertType);
@@ -34,6 +38,21 @@ public class Utils {
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
+    }
+
+    public static String Encrypt(String input){
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            BigInteger bi = new BigInteger(1, messageDigest);
+
+            return bi.toString(16);
+        } catch (NoSuchAlgorithmException e){
+            System.out.println("No such algorithm");
+        }
+        return null;
     }
 
     public static void loadLoginPage(AnchorPane anchorPane) throws IOException {
