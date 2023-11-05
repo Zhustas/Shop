@@ -16,9 +16,9 @@ public class StartGUI extends Application {
 //        stage.setResizable(false);
 //        stage.setScene(scene);
 //        stage.show();
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("warehouse-page.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("product-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Warehouse");
+        stage.setTitle("Products");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
@@ -30,6 +30,8 @@ public class StartGUI extends Application {
 
     // TODO:
     //  employee page - NOT DONE
-    //  warehouse page - NOT DONE (Doing now)
-    //  product page - NOT DONE
+    //  warehouse page - NOT DONE
+    //  product page - NOT DONE (Doing now)
+    //   add product area - DONE
+    //   all products area - NOT DONE
 }

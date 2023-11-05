@@ -7,32 +7,27 @@ import com.shop.classes.Warehouse;
 import com.shop.hibernateControllers.CRUDHib;
 import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
-import javafx.collections.ObservableList;
+import jakarta.persistence.Persistence;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductPageController implements Initializable {
     @FXML
-    private AnchorPane anchorPane;
+    private TextField leftTitleField;
     @FXML
-    private TextField titleField;
+    private TextField leftManufacturerField;
     @FXML
-    private TextField manufacturerField;
+    private TextField leftPriceField;
     @FXML
-    private TextField priceField;
+    private TextArea leftDescriptionField;
     @FXML
-    private TextArea descriptionField;
-    @FXML
-    private TableView<Product> productsTable;
-    @FXML
-    private ListView<Warehouse> warehouseList;
+    private ListView<Warehouse> leftWarehouseList;
 
     private EntityManagerFactory entityManagerFactory;
     private User user;
@@ -48,61 +43,55 @@ public class ProductPageController implements Initializable {
             return;
         }
 
+        Product newProduct = setNewProductFromFields();
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
 
-        Product product = setNewProductFromFields();
-
         try {
-            crudHib.create(product);
+            crudHib.create(newProduct);
+            Utils.generateAlert(Alert.AlertType.INFORMATION, "Success", "Create product", "Successfully created product.");
         } catch (Exception e){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Creating product", "Error in creating product.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Create product", "Error in creating product.");
         }
     }
 
-    private Product setNewProductFromFields(){
-        Product product = new Product();
+    @FXML
+    private void updateProduct(){
 
-        product.setTitle(titleField.getText());
-        product.setManufacturer(manufacturerField.getText());
-        product.setPrice(Double.parseDouble(priceField.getText()));
-        product.setDescription(descriptionField.getText());
+    }
 
-        ObservableList<Warehouse> warehouses = warehouseList.getSelectionModel().getSelectedItems();
-        product.setWarehouseList(warehouses);
+    @FXML
+    private void deleteProduct(){
 
-        return product;
     }
 
     private boolean isSuitableToCreate(){
-        if (titleField.getText().isEmpty()){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Title field", "Title should not be empty.");
+        if (leftTitleField.getText().isEmpty()){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Title field", "Title field should not be empty.");
             return false;
         }
-        if (manufacturerField.getText().isEmpty()){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Manufacturer field", "Manufacturer should not be empty.");
+        if (leftManufacturerField.getText().isEmpty()){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Manufacturer field", "Manufacturer field should not be empty.");
             return false;
         }
-        if (priceField.getText().isEmpty()){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Price field", "Price should not be empty.");
+        if (leftPriceField.getText().isEmpty()){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Price field", "Price field should not be empty.");
             return false;
         }
-        double price;
         try {
-            price = Double.parseDouble(priceField.getText());
+            double price = Double.parseDouble(leftPriceField.getText());
             if (price <= 0.0){
                 Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Price field", "Price should be higher than 0.");
                 return false;
             }
         } catch (NumberFormatException e){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Price field", "Price is not a number.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Price field", "Wrong number format.");
             return false;
         }
-        if (descriptionField.getText().isEmpty()){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Description field", "Description should not be empty.");
+        if (leftDescriptionField.getText().isEmpty()){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Description field", "Description field should not be empty.");
             return false;
         }
-        ObservableList<Warehouse> warehouses = warehouseList.getSelectionModel().getSelectedItems();
-        if (warehouses.isEmpty()){
+        if (leftWarehouseList.getSelectionModel().getSelectedItems().isEmpty()){
             Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Warehouse field", "At least one warehouse has to be selected.");
             return false;
         }
@@ -110,99 +99,61 @@ public class ProductPageController implements Initializable {
         return true;
     }
 
-    @FXML
-    private void updateProduct(){
-        if (productsTable.getSelectionModel().isEmpty()){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Product table", "No product has been selected for update.");
-            return;
-        }
+    private Product setNewProductFromFields(){
+        Product newProduct = new Product();
 
-        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        newProduct.setTitle(leftTitleField.getText());
+        newProduct.setManufacturer(leftManufacturerField.getText());
+        newProduct.setPrice(Double.parseDouble(leftPriceField.getText()));
+        newProduct.setDescription(leftDescriptionField.getText());
 
-        Product product = getSelectedProductFromTable();
-        if (!isSuitableToCreate()){
-            return;
-        }
+        List<Warehouse> selectedWarehouses = leftWarehouseList.getSelectionModel().getSelectedItems();
+        newProduct.setWarehouseList(selectedWarehouses);
 
-        product = setProductFromFields(product);
-
-        try {
-            crudHib.update(product);
-        } catch (Exception e){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Updating product", "Error in updating product.");
-        }
+        return newProduct;
     }
 
-    private Product setProductFromFields(Product product){
-        product.setTitle(titleField.getText());
-        product.setManufacturer(manufacturerField.getText());
-        product.setPrice(Double.parseDouble(priceField.getText()));
-        product.setDescription(descriptionField.getText());
-
-        ObservableList<Warehouse> warehouses = warehouseList.getSelectionModel().getSelectedItems();
-        product.setWarehouseList(warehouses);
-
-        return product;
-    }
-
-    private Product getSelectedProductFromTable(){
-        return productsTable.getSelectionModel().getSelectedItem();
-    }
-
-    @FXML
-    private void deleteProduct(){
-        Product product = getSelectedProductFromTable();
-
-        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
-
-        try {
-            crudHib.delete(Product.class, product.getID());
-        } catch (Exception e){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Deleting product", "Error in deleting product.");
-        }
-    }
-
-    @FXML
-    private void clearSelectedWarehouse(){
-        warehouseList.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    private void clearFields(){
-        titleField.setText(null);
-        manufacturerField.setText(null);
-        priceField.setText(null);
-        descriptionField.setText(null);
-        warehouseList.getSelectionModel().clearSelection();
-    }
-
-    private void loadProductsTable(){
-        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        List<Product> products = utilsHib.getAllRecords(Product.class);
-
-        productsTable.setItems((ObservableList<Product>) products);
-    }
-
-    private void loadWarehouseList(){
+    private void loadLeftWarehouseList(){
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
         List<Warehouse> warehouses = utilsHib.getAllRecords(Warehouse.class);
 
-        warehouseList.setItems((ObservableList<Warehouse>) warehouses);
+        leftWarehouseList.setItems(FXCollections.observableList(warehouses));
     }
 
     @FXML
-    private void loadMainShopPage() throws IOException {
-        Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
+    private void clearLeftFields(){
+        leftTitleField.setText("");
+        leftManufacturerField.setText("");
+        leftPriceField.setText("");
+        leftDescriptionField.setText("");
+        deselectLeftWarehouseList();
     }
+
     @FXML
-    private void loadAccountPage() throws IOException {
-        Utils.loadAccountPage(entityManagerFactory, user, anchorPane);
+    private void deselectLeftWarehouseList(){
+        leftWarehouseList.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void clearRightWarehouseList(){
+
+    }
+
+    @FXML
+    private void loadMainShopPage(){
+
+    }
+
+    @FXML
+    private void loadAccountPage(){
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        warehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        loadProductsTable();
-        loadWarehouseList();
+        entityManagerFactory = Persistence.createEntityManagerFactory("shop");
+
+        leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        loadLeftWarehouseList();
     }
 }
