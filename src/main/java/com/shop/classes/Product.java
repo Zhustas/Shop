@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.util.List;
 
@@ -23,5 +25,6 @@ public class Product {
     private String description;
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Warehouse> warehouseList;
 }

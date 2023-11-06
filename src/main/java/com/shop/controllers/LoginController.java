@@ -28,7 +28,7 @@ public class LoginController implements Initializable {
 
     public void validateAndConnect() throws IOException {
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        User user = utilsHib.getUserByCredentials(usernameField.getText(), passwordField.getText());
+        User user = utilsHib.getUserByCredentials(usernameField.getText(), Utils.encrypt(passwordField.getText()));
 
         if (user != null){
             Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);

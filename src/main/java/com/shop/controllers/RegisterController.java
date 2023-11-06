@@ -148,11 +148,11 @@ public class RegisterController {
 
         if (customerRButton.isSelected()){
             type = customerRButton.getText();
-            user = new Customer(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), type, birthDateField.getValue(), phoneNumber, address, LocalDate.now());
+            user = new Customer(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), Utils.encrypt(passwordField.getText()), type, birthDateField.getValue(), phoneNumber, address, LocalDate.now());
         } else {
             double salary = Double.parseDouble(salaryField.getText());
             type = administratorRButton.getText();
-            user = new Administrator(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), passwordField.getText(), type, birthDateField.getValue(), phoneNumber, address, academicDegreeField.getText(), salary);
+            user = new Administrator(nameField.getText(), lastNameField.getText(), emailField.getText(), usernameField.getText(), Utils.encrypt(passwordField.getText()), type, birthDateField.getValue(), phoneNumber, address, academicDegreeField.getText(), salary);
         }
 
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);

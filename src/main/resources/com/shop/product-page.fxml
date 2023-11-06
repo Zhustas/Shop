@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="727.0" prefWidth="1271.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.ProductPageController">
+<AnchorPane fx:id="anchorPane" prefHeight="727.0" prefWidth="1271.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.ProductPageController">
    <Text fill="#fff21f" layoutX="1024.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All products" underline="true">
       <font>
          <Font name="Impact" size="36.0" />
@@ -28,13 +28,13 @@
          <Font name="Calibri" size="18.0" />
       </font>
    </Button>
-   <TableView fx:id="productsTable" layoutX="343.0" layoutY="63.0" prefHeight="608.0" prefWidth="603.0">
+   <TableView fx:id="productsTable" layoutX="343.0" layoutY="63.0" onMouseClicked="#handleRowSelected" prefHeight="608.0" prefWidth="603.0">
       <columns>
-         <TableColumn prefWidth="145.0" text="Title" />
-         <TableColumn prefWidth="101.0" text="Manufacturer" />
-         <TableColumn prefWidth="61.0" text="Price" />
-         <TableColumn prefWidth="163.0" text="Description" />
-         <TableColumn prefWidth="132.0" text="Warehouse" />
+         <TableColumn fx:id="productsColumnTitle" prefWidth="145.0" text="Title" />
+         <TableColumn fx:id="productsColumnManufacturer" prefWidth="101.0" text="Manufacturer" />
+         <TableColumn fx:id="productsColumnPrice" prefWidth="61.0" text="Price" />
+         <TableColumn fx:id="productsColumnDescription" prefWidth="163.0" text="Description" />
+         <TableColumn fx:id="productsColumnWarehouse" prefWidth="132.0" text="Warehouse" />
       </columns>
    </TableView>
    <Button layoutX="1182.0" layoutY="687.0" mnemonicParsing="false" onAction="#updateProduct" style="-fx-background-color: #fff21f;" text="Update">
@@ -217,7 +217,7 @@
       </font>
    </Label>
    <ListView fx:id="rightWarehouseList" layoutX="972.0" layoutY="525.0" prefHeight="145.0" prefWidth="282.0" />
-   <Button layoutX="1120.0" layoutY="490.0" mnemonicParsing="false" onAction="#clearRightWarehouseList" prefHeight="28.0" prefWidth="134.0" style="-fx-background-color: #fff21f;" text="Clear warehouse">
+   <Button layoutX="1120.0" layoutY="490.0" mnemonicParsing="false" onAction="#deselectRightWarehouseList" prefHeight="28.0" prefWidth="134.0" style="-fx-background-color: #fff21f;" text="Clear warehouse">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>

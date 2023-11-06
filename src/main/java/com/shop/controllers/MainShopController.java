@@ -17,6 +17,8 @@ public class MainShopController {
     public void setData(EntityManagerFactory entityManagerFactory, User user){
         this.entityManagerFactory = entityManagerFactory;
         this.user = user;
+
+        Utils.enableMenuList(entityManagerFactory, user, anchorPane);
     }
 
     public void loadAccountPage() throws IOException {

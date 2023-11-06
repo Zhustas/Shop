@@ -10,8 +10,11 @@ import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,7 +43,7 @@ public class Utils {
         return result.get() == ButtonType.OK;
     }
 
-    public static String Encrypt(String input){
+    public static String encrypt(String input){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
 
@@ -53,6 +56,38 @@ public class Utils {
             System.out.println("No such algorithm");
         }
         return null;
+    }
+
+    public static void enableMenuList(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane){
+        Pane pane = new Pane();
+
+        pane.layoutXProperty().set(0);
+        pane.layoutYProperty().set(0);
+        pane.setPrefWidth(500);
+        pane.setPrefHeight(40);
+        pane.setStyle("-fx-background-color: ffffff;");
+
+        anchorPane.getChildren().add(pane);
+
+        double buttonWidth = 76, buttonHeight = 28, buttonX = 14, buttonY = 6;
+        String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
+
+        Button mainShopButton = new Button("Shop");
+        mainShopButton.setPrefWidth(buttonWidth);
+        mainShopButton.setPrefHeight(buttonHeight);
+        mainShopButton.setLayoutX(buttonX);
+        mainShopButton.setLayoutY(buttonY);
+        mainShopButton.setStyle(buttonStyle);
+
+        mainShopButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                loadMainShopPage(entityManagerFactory, user, anchorPane);
+            } catch (IOException e){
+                System.out.println("Caught IOException in Utils.java while loading main shop page.");
+            }
+        });
+
+        anchorPane.getChildren().add(mainShopButton);
     }
 
     public static void loadLoginPage(AnchorPane anchorPane) throws IOException {
