@@ -12,12 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Control;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import java.math.BigInteger;
@@ -66,28 +68,49 @@ public class Utils {
         pane.setPrefWidth(500);
         pane.setPrefHeight(40);
         pane.setStyle("-fx-background-color: ffffff;");
-
         anchorPane.getChildren().add(pane);
 
-        double buttonWidth = 76, buttonHeight = 28, buttonX = 14, buttonY = 6;
+        int gapBetweenButtons = 100;
+        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Account")};
+        ArrayList<Integer> availableButtons = new ArrayList<>();
+
+        double buttonWidth = 110, buttonHeight = 28, buttonX = 14, buttonY = 6;
         String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
 
-        Button mainShopButton = new Button("Shop");
-        mainShopButton.setPrefWidth(buttonWidth);
-        mainShopButton.setPrefHeight(buttonHeight);
-        mainShopButton.setLayoutX(buttonX);
-        mainShopButton.setLayoutY(buttonY);
-        mainShopButton.setStyle(buttonStyle);
+        availableButtons.add(0);
+        if (user.getUserType().equals("Administrator")){
+            availableButtons.add(1);
+            availableButtons.add(2);
+            availableButtons.add(3);
+        } else if (user.getUserType().equals("Employee")){
+            availableButtons.add(2);
+            availableButtons.add(3);
+        }
+        availableButtons.add(4);
 
-        mainShopButton.setOnMouseClicked(mouseEvent -> {
-            try {
-                loadMainShopPage(entityManagerFactory, user, anchorPane);
-            } catch (IOException e){
-                System.out.println("Caught IOException in Utils.java while loading main shop page.");
+        Button currentButton;
+        Text textButton;
+        for (int i = 0; i < availableButtons.size(); i++){
+            currentButton = buttons[availableButtons.get(i)];
+
+            currentButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
+            currentButton.setPrefHeight(buttonHeight);
+
+            textButton = new Text(currentButton.getText());
+            textButton.setFont(currentButton.getFont());
+            double width = textButton.getBoundsInLocal().getWidth();
+            if (i == 0){
+                currentButton.setLayoutX(buttonX);
+            } else {
+                currentButton.setLayoutX(buttonX + width + gapBetweenButtons * i);
             }
-        });
 
-        anchorPane.getChildren().add(mainShopButton);
+
+            currentButton.setLayoutY(buttonY);
+            currentButton.setStyle(buttonStyle);
+
+            anchorPane.getChildren().add(currentButton);
+        }
     }
 
     public static void loadLoginPage(AnchorPane anchorPane) throws IOException {
