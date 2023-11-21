@@ -1,6 +1,7 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
+import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.classes.Warehouse;
 import com.shop.hibernateControllers.CRUDHib;
@@ -29,9 +30,13 @@ public class WarehousePageController implements Initializable {
     private TextField leftAddressField, rightAddressField;
     @FXML
     private TableView<Warehouse> warehousesTable;
-    private Warehouse selectedWarehouse;
     @FXML
     private TableColumn<Warehouse, String> warehousesColumnTitle, warehousesColumnCity, warehousesColumnAddress;
+    @FXML
+    private TableView<Product> productsTable;
+    @FXML
+    private TableColumn<Product, String> productsColumnTitle, productsColumnPrice, productsColumnDescription;
+    private Warehouse selectedWarehouse;
     EntityManagerFactory entityManagerFactory;
     User user;
 
@@ -89,7 +94,24 @@ public class WarehousePageController implements Initializable {
 
     @FXML
     private void deleteWarehouse(){
+        if (selectedWarehouse == null){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Delete warehouse", "No warehouse is selected to delete.");
+            return;
+        }
 
+        if (!Utils.generateDialogBox(Alert.AlertType.CONFIRMATION, "Warning", "Delete warehouse", "Do you really want to delete warehouse?")){
+            return;
+        }
+
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        try {
+            crudHib.delete(Warehouse.class, selectedWarehouse.getID());
+            Utils.generateAlert(Alert.AlertType.WARNING, "Success", "Delete warehouse", "Successfully deleted warehouse.");
+        } catch (Exception e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Delete warehouse", "Error in deleting warehouse.");
+        }
+
+        updateWarehousesTable();
     }
 
     private void updateWarehousesTable(){
@@ -160,6 +182,14 @@ public class WarehousePageController implements Initializable {
         rightAddressField.setText(selectedWarehouse.getAddress());
     }
 
+    private void setProductsTable(){ // Select products, where warehouse_list_id = selected_warehouse_id
+        productsColumnTitle.setCellValueFactory(new PropertyValueFactory<Product, String>("title"));
+        productsColumnPrice.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
+        productsColumnDescription.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
+
+        productsTable.setItems(FXCollections.observableList(selectedWarehouse.getInStockProducts()));
+    }
+
     private void clearRightFields(){
         rightTitleField.setText("");
         rightCityField.setText("");
@@ -171,6 +201,7 @@ public class WarehousePageController implements Initializable {
         selectedWarehouse = warehousesTable.getSelectionModel().getSelectedItem();
         if (selectedWarehouse != null){
             setRightFields();
+            setProductsTable();
         }
     }
 

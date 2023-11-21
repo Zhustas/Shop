@@ -7,12 +7,11 @@ import com.shop.controllers.MainShopController;
 import com.shop.controllers.ProductPageController;
 import com.shop.controllers.RegisterController;
 import jakarta.persistence.EntityManagerFactory;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Control;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -61,56 +60,46 @@ public class Utils {
     }
 
     public static void enableMenuList(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane){
-        Pane pane = new Pane();
+        TabPane tabPane = new TabPane();
 
-        pane.layoutXProperty().set(0);
-        pane.layoutYProperty().set(0);
-        pane.setPrefWidth(500);
-        pane.setPrefHeight(40);
-        pane.setStyle("-fx-background-color: ffffff;");
-        anchorPane.getChildren().add(pane);
+        ArrayList<String> availablePages = new ArrayList<>();
 
-        int gapBetweenButtons = 100;
-        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Account")};
-        ArrayList<Integer> availableButtons = new ArrayList<>();
-
-        double buttonWidth = 110, buttonHeight = 28, buttonX = 14, buttonY = 6;
         String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
 
-        availableButtons.add(0);
+        availablePages.add("Shop");
         if (user.getUserType().equals("Administrator")){
-            availableButtons.add(1);
-            availableButtons.add(2);
-            availableButtons.add(3);
+            availablePages.add("Employees");
+            availablePages.add("Products");
+            availablePages.add("Warehouses");
         } else if (user.getUserType().equals("Employee")){
-            availableButtons.add(2);
-            availableButtons.add(3);
+            availablePages.add("Products");
+            availablePages.add("Warehouses");
         }
-        availableButtons.add(4);
+        availablePages.add("Account");
 
-        Button currentButton;
-        Text textButton;
-        for (int i = 0; i < availableButtons.size(); i++){
-            currentButton = buttons[availableButtons.get(i)];
+        for (String page : availablePages){
+            Tab tab = new Tab(page);
 
-            currentButton.setPrefWidth(Control.USE_COMPUTED_SIZE);
-            currentButton.setPrefHeight(buttonHeight);
+            tab.setOnSelectionChanged(event -> {
+                try {
+                    if (tab.getText().equals("Shop")){
+                        loadMainShopPage(entityManagerFactory, user, anchorPane);
+                    }
+                    if (tab.getText().equals("Products")){
+                        loadProductPage(entityManagerFactory, user, anchorPane);
+                    }
+//                    if (tab.getText().)
+                } catch (IOException e){
+                    System.out.println("Error in loading page.");
+                }
+            });
 
-            textButton = new Text(currentButton.getText());
-            textButton.setFont(currentButton.getFont());
-            double width = textButton.getBoundsInLocal().getWidth();
-            if (i == 0){
-                currentButton.setLayoutX(buttonX);
-            } else {
-                currentButton.setLayoutX(buttonX + width + gapBetweenButtons * i);
-            }
+            tabPane.getTabs().add(new Tab(page));
 
-
-            currentButton.setLayoutY(buttonY);
-            currentButton.setStyle(buttonStyle);
-
-            anchorPane.getChildren().add(currentButton);
         }
+
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        anchorPane.getChildren().add(tabPane);
     }
 
     public static void loadLoginPage(AnchorPane anchorPane) throws IOException {

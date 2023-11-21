@@ -157,6 +157,8 @@ public class RegisterController {
 
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         crudHib.create(user);
+
+        Utils.generateAlert(Alert.AlertType.INFORMATION, "Registration", "User registration", "User successfully created.");
     }
 
     @FXML

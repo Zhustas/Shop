@@ -112,14 +112,14 @@
          </font>
       </Label>
       <Line endX="-100.0" endY="-191.0" layoutX="418.0" layoutY="191.0" startX="-100.0" startY="545.0" stroke="#fff21f" strokeWidth="3.0" />
-      <TableView fx:id="employeesTable" layoutX="335.0" layoutY="52.0" prefHeight="622.0" prefWidth="651.0">
+      <TableView fx:id="employeesTable" layoutX="335.0" layoutY="52.0" onMouseClicked="#handleRowSelected" prefHeight="622.0" prefWidth="651.0">
         <columns>
-          <TableColumn prefWidth="86.0" text="Name" />
-          <TableColumn prefWidth="96.0" text="Last name" />
-            <TableColumn prefWidth="100.0" text="Username" />
-            <TableColumn prefWidth="113.0" text="Email" />
-            <TableColumn text="Salary" />
-            <TableColumn prefWidth="175.0" text="Warehouse" />
+          <TableColumn fx:id="employeesColumnName" prefWidth="86.0" text="Name" />
+          <TableColumn fx:id="employeesColumnLastName" prefWidth="96.0" text="Last name" />
+            <TableColumn fx:id="employeesColumnUsername" prefWidth="100.0" text="Username" />
+            <TableColumn fx:id="employeesColumnEmail" prefWidth="113.0" text="Email" />
+            <TableColumn fx:id="employeesColumnSalary" text="Salary" />
+            <TableColumn fx:id="employeesColumnWarehouse" prefWidth="175.0" text="Warehouse" />
         </columns>
       </TableView>
       <Text fill="#fff21f" layoutX="1045.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All employees" underline="true">
@@ -171,7 +171,7 @@
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="rightNameFIeld" layoutX="1011.0" layoutY="133.0">
+      <TextField fx:id="rightNameField" layoutX="1011.0" layoutY="133.0">
          <font>
             <Font name="Calibri" size="18.0" />
          </font>
@@ -272,5 +272,21 @@
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Label>
+      <Button layoutX="151.0" layoutY="530.0" mnemonicParsing="false" onAction="#deselectLeftWarehouseList" prefHeight="28.0" prefWidth="134.0" style="-fx-background-color: #fff21f;" text="Clear selected">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="1136.0" layoutY="530.0" mnemonicParsing="false" onAction="#deselectRightWarehouseList" prefHeight="28.0" prefWidth="134.0" style="-fx-background-color: #fff21f;" text="Clear selected">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Employee extends User {
     private double salary;
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Warehouse> worksAtWarehouse;
 
     public Employee(String name, String lastName, String email, String username, String password, String userType, LocalDate birthDate, String phoneNumber, String address, LocalDate employmentDate, long employedByID, double salary) {
@@ -29,6 +32,8 @@ public class Employee extends User {
         this.employedByID = employedByID;
         this.salary = salary;
     }
+
+
 
     @Override
     public String toString() {
