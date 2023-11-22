@@ -2,24 +2,23 @@ package com.shop.controllers;
 
 import com.shop.Utils.Utils;
 import com.shop.classes.Employee;
-import com.shop.classes.Product;
+import com.shop.classes.User;
 import com.shop.classes.Warehouse;
 import com.shop.hibernateControllers.CRUDHib;
 import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class EmployeePageController implements Initializable {
+public class EmployeePageController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private TextField leftNameField, rightNameField;
     @FXML
@@ -40,7 +39,21 @@ public class EmployeePageController implements Initializable {
     private TableColumn<Employee, String> employeesColumnName, employeesColumnLastName, employeesColumnUsername, employeesColumnEmail, employeesColumnSalary, employeesColumnWarehouse;
 
     EntityManagerFactory entityManagerFactory;
+    User user;
     Employee selectedEmployee;
+
+    public void setData(EntityManagerFactory entityManagerFactory, User user){
+        this.entityManagerFactory = entityManagerFactory;
+        this.user = user;
+
+        updateEmployeesTable();
+        leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        updateLeftWarehouseList();
+        rightWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        updateRightWarehouseList();
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
+    }
 
     private void updateLeftWarehouseList(){
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
@@ -272,6 +285,7 @@ public class EmployeePageController implements Initializable {
         leftPasswordField.setText("");
         leftSalaryField.setText("");
         leftWarehouseList.getSelectionModel().clearSelection();
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
     private void setRightFields(){
@@ -309,16 +323,5 @@ public class EmployeePageController implements Initializable {
         if (selectedEmployee != null){
             setRightFields();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        entityManagerFactory = Persistence.createEntityManagerFactory("shop");
-
-        updateEmployeesTable();
-        leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        updateLeftWarehouseList();
-        rightWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        updateRightWarehouseList();
     }
 }

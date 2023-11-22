@@ -33,23 +33,8 @@ public class Employee extends User {
         this.salary = salary;
     }
 
-
-
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userType='" + userType + '\'' +
-                ", birthDate=" + birthDate +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", employmentDate=" + employmentDate +
-                ", employedByID=" + employedByID +
-                ", salary=" + salary +
-                '}';
+        return name + " " + lastName + ", " + email;
     }
 }

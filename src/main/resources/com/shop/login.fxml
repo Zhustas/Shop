@@ -9,18 +9,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="370.0" style="-fx-background-color: #49566b; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.LoginController">
-   <PasswordField fx:id="passwordField" layoutX="33.0" layoutY="208.0" prefHeight="37.0" prefWidth="226.0" promptText="Enter password">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="397.0" style="-fx-background-color: #49566b; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.LoginController">
+   <PasswordField fx:id="passwordField" layoutX="33.0" layoutY="208.0" prefHeight="37.0" prefWidth="329.0" promptText="Enter password">
       <font>
          <Font name="Calibri" size="20.0" />
       </font>
    </PasswordField>
-   <TextField fx:id="usernameField" layoutX="33.0" layoutY="119.0" prefHeight="40.0" prefWidth="226.0" promptText="Enter username">
+   <TextField fx:id="usernameField" layoutX="33.0" layoutY="119.0" prefHeight="40.0" prefWidth="329.0" promptText="Enter username">
       <font>
          <Font name="Calibri" size="20.0" />
       </font>
    </TextField>
-   <Button layoutX="292.0" layoutY="308.0" mnemonicParsing="false" onAction="#validateAndConnect" style="-fx-background-color: #fff21f;" text="Login">
+   <Button layoutX="311.0" layoutY="308.0" mnemonicParsing="false" onAction="#validateAndConnect" style="-fx-background-color: #fff21f;" text="Login">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
@@ -28,9 +28,9 @@
          <Font name="Calibri" size="18.0" />
       </font>
    </Button>
-   <Text fill="#fff21f" layoutX="20.0" layoutY="59.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO SHOP">
+   <Text fill="#fff21f" layoutX="23.0" layoutY="62.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO SHOP">
       <font>
-         <Font name="Impact" size="45.0" />
+         <Font name="Impact" size="48.0" />
       </font>
    </Text>
    <Button layoutX="14.0" layoutY="308.0" mnemonicParsing="false" onAction="#loadRegistrationPage" style="-fx-background-color: #fff21f;" text="Register">

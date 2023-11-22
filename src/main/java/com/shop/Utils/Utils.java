@@ -2,14 +2,12 @@ package com.shop.Utils;
 
 import com.shop.StartGUI;
 import com.shop.classes.User;
-import com.shop.controllers.AccountPageController;
-import com.shop.controllers.MainShopController;
-import com.shop.controllers.ProductPageController;
-import com.shop.controllers.RegisterController;
+import com.shop.controllers.*;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -56,50 +54,8 @@ public class Utils {
         } catch (NoSuchAlgorithmException e){
             System.out.println("No such algorithm");
         }
+
         return null;
-    }
-
-    public static void enableMenuList(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane){
-        TabPane tabPane = new TabPane();
-
-        ArrayList<String> availablePages = new ArrayList<>();
-
-        String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
-
-        availablePages.add("Shop");
-        if (user.getUserType().equals("Administrator")){
-            availablePages.add("Employees");
-            availablePages.add("Products");
-            availablePages.add("Warehouses");
-        } else if (user.getUserType().equals("Employee")){
-            availablePages.add("Products");
-            availablePages.add("Warehouses");
-        }
-        availablePages.add("Account");
-
-        for (String page : availablePages){
-            Tab tab = new Tab(page);
-
-            tab.setOnSelectionChanged(event -> {
-                try {
-                    if (tab.getText().equals("Shop")){
-                        loadMainShopPage(entityManagerFactory, user, anchorPane);
-                    }
-                    if (tab.getText().equals("Products")){
-                        loadProductPage(entityManagerFactory, user, anchorPane);
-                    }
-//                    if (tab.getText().)
-                } catch (IOException e){
-                    System.out.println("Error in loading page.");
-                }
-            });
-
-            tabPane.getTabs().add(new Tab(page));
-
-        }
-
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        anchorPane.getChildren().add(tabPane);
     }
 
     public static void loadLoginPage(AnchorPane anchorPane) throws IOException {
@@ -111,12 +67,12 @@ public class Utils {
         stage.show();
     }
 
-    public static void loadRegistrationPage(EntityManagerFactory entityManagerFactory, AnchorPane anchorPane) throws IOException {
+    public static void loadRegistrationPage(EntityManagerFactory entityManagerFactory) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("register.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         RegisterController registerCustomerController = fxmlLoader.getController();
         registerCustomerController.setData(entityManagerFactory);
-        Stage stage = (Stage) anchorPane.getScene().getWindow(); // Getting current stage, so that scene would be drawn on top of it
+        Stage stage = new Stage();
         stage.setTitle("Register");
         stage.setScene(scene);
         stage.show();
@@ -133,13 +89,13 @@ public class Utils {
         stage.show();
     }
 
-    public static void loadAccountPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("account-page.fxml"));
+    public static void loadEmployeePage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("employee-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        AccountPageController accountPageController = fxmlLoader.getController();
-        accountPageController.setData(entityManagerFactory, user);
+        EmployeePageController employeePageController = fxmlLoader.getController();
+        employeePageController.setData(entityManagerFactory, user);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
-        stage.setTitle("Shop (account)");
+        stage.setTitle("Shop (employee)");
         stage.setScene(scene);
         stage.show();
     }
@@ -153,5 +109,91 @@ public class Utils {
         stage.setTitle("Shop (product)");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void loadWarehousePage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("warehouse-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        WarehousePageController warehousePageController = fxmlLoader.getController();
+        warehousePageController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (warehouse)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadAccountPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("account-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AccountPageController accountPageController = fxmlLoader.getController();
+        accountPageController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (account)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void determineMenu(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane){
+        Pane pane = new Pane();
+        pane.layoutXProperty().set(0);
+        pane.layoutYProperty().set(0);
+        pane.setPrefWidth(anchorPane.getPrefWidth());
+        pane.setPrefHeight(40);
+        pane.setStyle("-fx-background-color: ffffff;");
+        anchorPane.getChildren().add(pane);
+
+        double buttonX = 14;
+        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Account")};
+        String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
+
+        ArrayList<Integer> availableButtons = new ArrayList<>();
+
+        availableButtons.add(0);
+        if (user.getUserType().equals("Administrator")){
+            availableButtons.add(1);
+            availableButtons.add(2);
+            availableButtons.add(3);
+        } else if (user.getUserType().equals("Employee")){
+            availableButtons.add(2);
+            availableButtons.add(3);
+        }
+        availableButtons.add(4);
+
+        Button currentButton;
+        for (Integer availableButton : availableButtons) {
+            currentButton = createMenuButton(buttons[availableButton], buttonX, buttonStyle);
+            Button finalButton = currentButton;
+            currentButton.setOnAction(event -> {
+                try {
+                    if (finalButton.getText().equals("Shop")){
+                        loadMainShopPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Employees")){
+                        loadEmployeePage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Products")){
+                        loadProductPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Warehouses")){
+                        loadWarehousePage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Account")){
+                        loadAccountPage(entityManagerFactory, user, anchorPane);
+                    }
+                } catch (IOException e){
+                    System.out.println("Error in opening page from menu list.");
+                    e.printStackTrace();
+                }
+            });
+            anchorPane.getChildren().add(currentButton);
+            anchorPane.getScene().snapshot(null);
+
+            buttonX = buttonX + currentButton.getLayoutBounds().getWidth() + 10;
+        }
+    }
+
+    private static Button createMenuButton(Button button, double buttonX, String buttonStyle){
+        button.setStyle(buttonStyle);
+        button.setPadding(new Insets(5, 10, 5, 10));
+        button.setLayoutX(buttonX);
+        button.setLayoutY(6);
+
+        return button;
     }
 }

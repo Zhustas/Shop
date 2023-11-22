@@ -20,20 +20,4 @@ public class Customer extends User {
         super(name, lastName, email, username, password, userType, birthDate, phoneNumber, address);
         this.registrationDate = registrationDate;
     }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "registrationDate=" + registrationDate +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userType='" + userType + '\'' +
-                ", birthDate=" + birthDate +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

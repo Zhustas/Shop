@@ -7,24 +7,18 @@ import com.shop.classes.Warehouse;
 import com.shop.hibernateControllers.CRUDHib;
 import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class ProductPageController implements Initializable {
+public class ProductPageController {
     @FXML
     private AnchorPane anchorPane;
-
     @FXML
     private TextField leftTitleField;
     @FXML
@@ -59,6 +53,13 @@ public class ProductPageController implements Initializable {
     public void setData(EntityManagerFactory entityManagerFactory, User user){
         this.entityManagerFactory = entityManagerFactory;
         this.user = user;
+
+        leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        rightWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        loadWarehouseList();
+        updateProductsTable();
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
     @FXML
@@ -303,25 +304,5 @@ public class ProductPageController implements Initializable {
     @FXML
     private void deselectRightWarehouseList(){
         rightWarehouseList.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    private void loadMainShopPage() throws IOException {
-        Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
-    }
-
-    @FXML
-    private void loadAccountPage() throws IOException {
-        Utils.loadAccountPage(entityManagerFactory, user, anchorPane);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        entityManagerFactory = Persistence.createEntityManagerFactory("shop");
-
-        leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        rightWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        loadWarehouseList();
-        updateProductsTable();
     }
 }

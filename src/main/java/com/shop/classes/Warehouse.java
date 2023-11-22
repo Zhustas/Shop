@@ -25,6 +25,7 @@ public class Warehouse {
     private String address;
 
     @ManyToMany(mappedBy = "worksAtWarehouse")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Employee> employees;
 
     @ManyToMany(mappedBy = "warehouseList")

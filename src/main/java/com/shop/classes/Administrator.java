@@ -22,21 +22,4 @@ public class Administrator extends User {
         this.academicDegree = academicDegree;
         this.salary = salary;
     }
-
-    @Override
-    public String toString() {
-        return "Administrator{" +
-                "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userType='" + userType + '\'' +
-                ", birthDate=" + birthDate +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", academicDegree='" + academicDegree + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
 }

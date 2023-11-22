@@ -1,6 +1,7 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
+import com.shop.Utils.UtilsChecking;
 import com.shop.classes.Administrator;
 import com.shop.classes.Customer;
 import com.shop.classes.Employee;
@@ -81,6 +82,8 @@ public class AccountPageController {
 
         showAppropriateFields();
         setFields();
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
     private boolean isType(String type) {
@@ -117,7 +120,7 @@ public class AccountPageController {
         lastNameField.setText(user.getLastName());
         emailField.setText(user.getEmail());
         usernameField.setText(user.getUsername());
-        passwordField.setText(user.getPassword());
+        passwordField.setText("");
         birthDateField.setValue(user.getBirthDate());
         phoneNumberField.setText(user.getPhoneNumber());
         addressField.setText(user.getAddress());
@@ -163,7 +166,7 @@ public class AccountPageController {
         user.setLastName(lastNameField.getText());
         user.setEmail(emailField.getText());
         user.setUsername(usernameField.getText());
-        user.setPassword(passwordField.getText());
+        user.setPassword(Utils.encrypt(passwordField.getText()));
         user.setBirthDate(birthDateField.getValue());
 
         String address = addressField.getText();
@@ -203,45 +206,20 @@ public class AccountPageController {
     }
 
     private boolean suitableToCreate(){
-        if (nameField.getText().isEmpty()){ // Name is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Name field", "Name should not be empty.");
+        if (!UtilsChecking.isSuitable(nameField, lastNameField, emailField, usernameField, passwordField)){
             return false;
         }
-        if (lastNameField.getText().isEmpty()){ // Last name is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Last name field", "Last name should not be empty.");
-            return false;
-        }
-        if (emailField.getText().isEmpty()){ // Email is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Email field", "Email should not be empty.");
-            return false;
-        }
-        if (usernameField.getText().isEmpty()){ // Username is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Username field", "Username should not be empty.");
-            return false;
-        }
-        if (passwordField.getText().isEmpty()){ // Password is empty
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Password field", "Password should not be empty.");
-            return false;
-        }
-
-        if (isType("Administrator") && academicDegreeField.getText().isEmpty()){ // Academic degree is empty
+        if (isType("Administrator") && academicDegreeField.getText().isEmpty()){
             Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Academic degree field", "Academic degree should not be empty.");
             return false;
         }
-        if (isType("Administrator") && salaryField.getText().isEmpty()){ // Salary is empty
+        if (isType("Administrator") && salaryField.getText().isEmpty()){
             Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should not be empty.");
             return false;
         }
-        double salary;
-        if (isType("Administrator")){ // Salary is not numeric and lower than 0
-            try {
-                salary = Double.parseDouble(salaryField.getText());
-            } catch (NumberFormatException e){
-                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Wrong number.");
-                return false;
-            }
-            if (salary <= 0.0){
-                Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Salary field", "Salary should be higher than 0.");
+
+        if (isType("Administrator")){
+            if (!UtilsChecking.isSuitableSalary(salaryField)){
                 return false;
             }
         }
@@ -278,14 +256,5 @@ public class AccountPageController {
 
     private void loadLoginPage() throws IOException {
         Utils.loadLoginPage(anchorPane);
-    }
-
-    public void loadMainShopPage() throws IOException {
-        Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
-    }
-
-    @FXML
-    private void loadProductPage() throws IOException {
-        Utils.loadProductPage(entityManagerFactory, user, anchorPane);
     }
 }

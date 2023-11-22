@@ -26,9 +26,12 @@ public class LoginController implements Initializable {
 
     private EntityManagerFactory entityManagerFactory;
 
-    public void validateAndConnect() throws IOException {
+    @FXML
+    private void validateAndConnect() throws IOException {
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        User user = utilsHib.getUserByCredentials(usernameField.getText(), Utils.encrypt(passwordField.getText()));
+
+        String username = usernameField.getText(), encryptedPassword = Utils.encrypt(passwordField.getText());
+        User user = utilsHib.getUserByCredentials(username, encryptedPassword);
 
         if (user != null){
             Utils.loadMainShopPage(entityManagerFactory, user, anchorPane);
@@ -37,8 +40,9 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void loadRegistrationPage() throws IOException {
-        Utils.loadRegistrationPage(entityManagerFactory, anchorPane);
+    @FXML
+    private void loadRegistrationPage() throws IOException {
+        Utils.loadRegistrationPage(entityManagerFactory);
     }
 
     @Override

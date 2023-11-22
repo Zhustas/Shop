@@ -17,15 +17,15 @@ import java.time.LocalDate;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;                 // Primary key
+    private long ID;
 
-    protected String name;           // Mandatory
-    protected String lastName;       // Mandatory
-    protected String email;          // Mandatory
+    protected String name;
+    protected String lastName;
+    protected String email;
     @Column(unique = true)
-    protected String username;       // Mandatory
-    protected String password;       // Mandatory
-    protected String userType;       // Mandatory
+    protected String username;
+    protected String password;
+    protected String userType;
 
     protected LocalDate birthDate;
     protected String phoneNumber;

@@ -1,27 +1,27 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
+import com.shop.classes.Employee;
 import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.classes.Warehouse;
 import com.shop.hibernateControllers.CRUDHib;
 import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class WarehousePageController implements Initializable {
+public class WarehousePageController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private TextField leftTitleField, rightTitleField;
     @FXML
@@ -36,6 +36,10 @@ public class WarehousePageController implements Initializable {
     private TableView<Product> productsTable;
     @FXML
     private TableColumn<Product, String> productsColumnTitle, productsColumnPrice, productsColumnDescription;
+    @FXML
+    private TableView<Employee> employeesTable;
+    @FXML
+    private TableColumn<Employee, String> employeesColumnName, employeesColumnLastName, employeesColumnEmail;
     private Warehouse selectedWarehouse;
     EntityManagerFactory entityManagerFactory;
     User user;
@@ -45,6 +49,8 @@ public class WarehousePageController implements Initializable {
         this.user = user;
 
         updateWarehousesTable();
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
     @FXML
@@ -118,9 +124,9 @@ public class WarehousePageController implements Initializable {
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
         List<Warehouse> warehouses = utilsHib.getAllRecords(Warehouse.class);
 
-        warehousesColumnTitle.setCellValueFactory(new PropertyValueFactory<Warehouse, String>("title"));
-        warehousesColumnCity.setCellValueFactory(new PropertyValueFactory<Warehouse, String>("city"));
-        warehousesColumnAddress.setCellValueFactory(new PropertyValueFactory<Warehouse, String>("address"));
+        warehousesColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        warehousesColumnCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        warehousesColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
 
         warehousesTable.setItems(FXCollections.observableList(warehouses));
     }
@@ -182,13 +188,22 @@ public class WarehousePageController implements Initializable {
         rightAddressField.setText(selectedWarehouse.getAddress());
     }
 
-    private void setProductsTable(){ // Select products, where warehouse_list_id = selected_warehouse_id
-        productsColumnTitle.setCellValueFactory(new PropertyValueFactory<Product, String>("title"));
-        productsColumnPrice.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
-        productsColumnDescription.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
+    private void setProductsTable(){
+        productsColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        productsColumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        productsColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         productsTable.setItems(FXCollections.observableList(selectedWarehouse.getInStockProducts()));
     }
+
+    private void setEmployeesTable(){
+        employeesColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        employeesColumnLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        employeesColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        employeesTable.setItems(FXCollections.observableList(selectedWarehouse.getEmployees()));
+    }
+
 
     private void clearRightFields(){
         rightTitleField.setText("");
@@ -202,13 +217,7 @@ public class WarehousePageController implements Initializable {
         if (selectedWarehouse != null){
             setRightFields();
             setProductsTable();
+            setEmployeesTable();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        entityManagerFactory = Persistence.createEntityManagerFactory("shop");
-
-        updateWarehousesTable();
     }
 }
