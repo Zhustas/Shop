@@ -257,4 +257,14 @@ public class AccountPageController {
     private void loadLoginPage() throws IOException {
         Utils.loadLoginPage(anchorPane);
     }
+
+    @FXML
+    private void logout(){
+        try {
+            Utils.generateAlert(Alert.AlertType.INFORMATION, "Success", "Log out", "User has been logged out.");
+            loadLoginPage();
+        } catch (IOException e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Log out", "There was an error in logging out.");
+        }
+    }
 }

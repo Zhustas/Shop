@@ -167,7 +167,7 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="421.0" layoutY="559.0" mnemonicParsing="false" onAction="#deleteUser" style="-fx-background-color: #eb2f42;" text="Delete account">
+      <Button layoutX="405.0" layoutY="559.0" mnemonicParsing="false" onAction="#deleteUser" style="-fx-background-color: #eb2f42;" text="Delete account">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -175,7 +175,7 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="688.0" layoutY="559.0" mnemonicParsing="false" onAction="#setFields" style="-fx-background-color: #fff21f;" text="Reload">
+      <Button layoutX="596.0" layoutY="559.0" mnemonicParsing="false" onAction="#setFields" style="-fx-background-color: #fff21f;" text="Reload">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -189,6 +189,14 @@
          </cursor>
          <font>
             <Font name="Calibri" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="683.0" layoutY="559.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #fff21f;" text="Log out">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="18.0" />
          </font>
       </Button>
    </children>
