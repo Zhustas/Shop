@@ -20,7 +20,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @OneToMany(orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Product> itemsInCart;
+    private long userID;
+    private long productID;
+
+    public Cart(long user_id, long product_id) {
+        this.userID = user_id;
+        this.productID = product_id;
+    }
 }

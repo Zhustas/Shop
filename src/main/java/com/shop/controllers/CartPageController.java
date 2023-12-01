@@ -1,6 +1,7 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
+import com.shop.classes.Cart;
 import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.hibernateControllers.CRUDHib;
@@ -17,64 +18,54 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.shop.classes.Cart;
-
-public class MainShopController {
+public class CartPageController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
     private TableView<Product> productsTable;
     @FXML
     private TableColumn<Product, String> productsColumnTitle, productsColumnDescription, productsColumnPrice;
-    private EntityManagerFactory entityManagerFactory;
+    EntityManagerFactory entityManagerFactory;
     User user;
-    ArrayList<Long> productsIDS = new ArrayList<>();
+    List<Product> productsInCart = new ArrayList<>();
     Product selectedProduct;
 
     public void setData(EntityManagerFactory entityManagerFactory, User user){
         this.entityManagerFactory = entityManagerFactory;
         this.user = user;
 
-        loadProductsIDSInCart();
-        loadProductsTable();
+        loadProductsInCart();
 
         Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
     @FXML
-    private void addToCart(){
+    private void removeFromCart(){
         if (selectedProduct == null){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Product", "Product select", "No product selected to add to a cart.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Product", "Product select", "No product selected to remove from a cart.");
             return;
         }
 
-        if (productsIDS.contains(selectedProduct.getID())){
-            Utils.generateAlert(Alert.AlertType.INFORMATION, "Product", "Product select", "Product is already in a cart.");
-        } else {
-            CRUDHib crudHib = new CRUDHib(entityManagerFactory);
-            try {
-                crudHib.create(new Cart(user.getID(), selectedProduct.getID()));
-                Utils.generateAlert(Alert.AlertType.INFORMATION, "Product", "Product select", "Product added to a cart.");
-                loadProductsIDSInCart();
-            } catch (Exception e){
-                Utils.generateAlert(Alert.AlertType.ERROR, "Product", "Product select", "Error in adding product to a cart.");
-            }
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        try {
+            crudHib.delete(Cart.class, getCartID(user.getID(), selectedProduct.getID()));
+        } catch (Exception e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Removing product", "Error in removing product from cart.");
         }
+
+        loadProductsInCart();
     }
 
-    private void loadProductsIDSInCart(){
-        if (!productsIDS.isEmpty()){
-            productsIDS.clear();
-        }
-
+    private long getCartID(long userID, long productID){
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
 
         List<Cart> carts = utilsHib.getAllRecords(Cart.class);
         for (Cart cart : carts){
-            if (cart.getUserID() == user.getID()){
-                productsIDS.add(cart.getProductID());
+            if (cart.getUserID() == userID && cart.getProductID() == productID){
+                return cart.getID();
             }
         }
+        return 0;
     }
 
     @FXML
@@ -82,12 +73,22 @@ public class MainShopController {
         selectedProduct = productsTable.getSelectionModel().getSelectedItem();
     }
 
-    private void loadProductsTable(){
+    private void loadProductsInCart(){
+        if (!productsInCart.isEmpty()){
+            productsInCart.clear();
+        }
+
         productsColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         productsColumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         productsColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        productsTable.setItems(FXCollections.observableList(utilsHib.getAllRecords(Product.class)));
+        List<Cart> carts = utilsHib.getAllRecords(Cart.class);
+        for (Cart cart : carts){
+            if (cart.getUserID() == user.getID()){
+                productsInCart.add(utilsHib.getEntityById(Product.class, cart.getProductID()));
+            }
+        }
+        productsTable.setItems(FXCollections.observableList(productsInCart));
     }
 }

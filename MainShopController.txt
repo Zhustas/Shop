@@ -1,0 +1,146 @@
+public void setData(EntityManagerFactory entityManagerFactory, User user){
+        this.entityManagerFactory = entityManagerFactory;
+        this.user = user;
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
+
+        /*loadProductsIDSInCart();
+
+        int paneLayoutY = 0;
+        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
+        List<Product> products = utilsHib.getAllRecords(Product.class);
+        for (Product product : products){
+            createProductRepresentation(product.getTitle(), product.getPrice(), product.getDescription(), 120, 90 + paneLayoutY, product);
+            paneLayoutY += 120;
+        }*/
+    }
+
+    /*private void loadProductsIDSInCart(){
+        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
+
+        List<Cart> carts = utilsHib.getAllRecords(Cart.class);
+        for (Cart cart : carts){
+            if (cart.getUserID() == user.getID()){
+                productsIDS.add(cart.getProductID());
+            }
+        }
+    }
+
+    private void createProductRepresentation(String title, double price, String description, int layoutX, int layoutY, Product product){
+        Pane pane = getPane(layoutX, layoutY);
+        Label titleLabel = getTitleLabel(title);
+        Label descriptionLabel = getDescriptionLabel(description);
+        Label priceLabel = getPriceLabel(price);
+        Line longerLine = getLongerLine();
+        Line firstVerticalLine = getFirstVerticalLine();
+        Line secondVerticalLine = getSecondVerticalLine();
+        Button addToCartButton = getAddToCartButton(product);
+
+        pane.getChildren().addAll(titleLabel, descriptionLabel, priceLabel, longerLine, firstVerticalLine, secondVerticalLine, addToCartButton);
+
+        anchorPane.getChildren().add(pane);
+    }
+
+    private Pane getPane(int layoutX, int layoutY){
+        Pane pane = new Pane();
+        pane.setPrefWidth(739);
+        pane.setPrefHeight(90);
+        pane.setLayoutX(layoutX);
+        pane.setLayoutY(layoutY);
+        pane.setStyle("-fx-background-color: #ffffff;");
+
+        return pane;
+    }
+
+    private Label getTitleLabel(String title){
+        Label titleLabel = new Label(title);
+        titleLabel.setFont(new Font("Calibri", 18));
+        titleLabel.setLayoutX(14);
+        titleLabel.setLayoutY(14);
+
+        return titleLabel;
+    }
+
+    private Label getDescriptionLabel(String description){
+        Label descriptionLabel = new Label(description);
+        descriptionLabel.setFont(new Font("Calibri", 16));
+        descriptionLabel.setLayoutX(14);
+        descriptionLabel.setLayoutY(58);
+
+        return descriptionLabel;
+    }
+
+    private Label getPriceLabel(double price){
+        Label priceLabel = new Label(String.valueOf(price));
+        priceLabel.setFont(new Font("Calibri", 16));
+        priceLabel.setLayoutX(541);
+        priceLabel.setLayoutY(16);
+
+        return priceLabel;
+    }
+
+    private Line getLongerLine(){
+        Line line = new Line();
+        line.setLayoutX(101);
+        line.setLayoutY(42);
+        line.setStartX(-100);
+        line.setStartY(0);
+        line.setEndX(543.5);
+        line.setEndY(0);
+
+        return  line;
+    }
+
+    private Line getFirstVerticalLine(){
+        Line line = new Line();
+        line.setLayoutX(471);
+        line.setLayoutY(34);
+        line.setStartX(62);
+        line.setStartY(-34);
+        line.setEndX(62);
+        line.setEndY(8.5);
+
+        return line;
+    }
+
+    private Line getSecondVerticalLine(){
+        Line line = new Line();
+        line.setLayoutX(634);
+        line.setLayoutY(137);
+        line.setStartX(11);
+        line.setStartY(-137);
+        line.setEndX(11);
+        line.setEndY(-47);
+
+        return line;
+    }
+
+    private Button getAddToCartButton(Product product){
+        Button button = new Button("Add to cart");
+        button.setFont(new Font("Calibri", 18));
+        button.setWrapText(true);
+        button.textAlignmentProperty().set(TextAlignment.CENTER);
+        button.setStyle("-fx-background-color:  #fff21f; -fx-cursor: hand;");
+
+        button.setPrefWidth(80);
+        button.setPrefHeight(80);
+        button.setLayoutX(653);
+        button.setLayoutY(5);
+
+        button.setOnAction(event -> {
+            if (productsIDS.contains(product.getID())){
+                Utils.generateAlert(Alert.AlertType.INFORMATION, "Product", "Product select", "Product is already in a cart.");
+            } else {
+                CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+                try {
+                    crudHib.create(new Cart(user.getID(), product.getID()));
+                    Utils.generateAlert(Alert.AlertType.INFORMATION, "Product", "Product select", "Product added to a cart.");
+                    productsIDS.add(product.getID());
+                } catch (Exception e){
+                    Utils.generateAlert(Alert.AlertType.ERROR, "Product", "Product select", "Error in adding product to a cart.");
+                }
+            }
+        });
+
+        return button;
+    }*/

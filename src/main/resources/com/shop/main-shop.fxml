@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="689.0" prefWidth="1140.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.MainShopController" />
+<AnchorPane fx:id="anchorPane" prefHeight="689.0" prefWidth="1140.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.MainShopController">
+   <children>
+      <Pane disable="true" layoutX="120.0" layoutY="90.0" prefHeight="90.0" prefWidth="739.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Title">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="58.0" text="Description">
+               <font>
+                  <Font name="Calibri" size="16.0" />
+               </font>
+            </Label>
+            <Line endX="11.0" endY="-47.0" layoutX="634.0" layoutY="137.0" startX="11.0" startY="-137.0" />
+            <Line endX="543.5" layoutX="101.0" layoutY="42.0" startX="-100.0" />
+            <Button layoutX="653.0" layoutY="5.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #fff21f;" text="Add to cart" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="541.0" layoutY="16.0" text="Price">
+               <font>
+                  <Font name="Calibri" size="16.0" />
+               </font>
+            </Label>
+            <Line endX="62.0" endY="8.5" layoutX="471.0" layoutY="34.0" startX="62.0" startY="-34.0" />
+         </children>
+      </Pane>
+      <TableView fx:id="productsTable" layoutX="26.0" layoutY="124.0" onMouseClicked="#handleRowSelected" prefHeight="549.0" prefWidth="928.0">
+        <columns>
+          <TableColumn fx:id="productsColumnTitle" prefWidth="278.0" text="Title" />
+          <TableColumn fx:id="productsColumnDescription" prefWidth="537.0" text="Description" />
+            <TableColumn fx:id="productsColumnPrice" prefWidth="112.0" text="Price" />
+        </columns>
+      </TableView>
+      <Button layoutX="1020.0" layoutY="641.0" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #17bf25;" text="Add to cart">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Button>
+      <Text fill="#fff21f" layoutX="26.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available products in a shop">
+         <font>
+            <Font name="Impact" size="45.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -28,4 +28,13 @@ public class Product {
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Warehouse> warehouseList;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "title='" + title + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

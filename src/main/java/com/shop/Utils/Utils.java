@@ -133,6 +133,17 @@ public class Utils {
         stage.show();
     }
 
+    public static void loadCartPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("cart.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        CartPageController cartPageController = fxmlLoader.getController();
+        cartPageController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (cart)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void determineMenu(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane){
         Pane pane = new Pane();
         pane.layoutXProperty().set(0);
@@ -143,7 +154,7 @@ public class Utils {
         anchorPane.getChildren().add(pane);
 
         double buttonX = 14;
-        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Account")};
+        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Cart"), new Button("Account")};
         String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
 
         ArrayList<Integer> availableButtons = new ArrayList<>();
@@ -158,6 +169,7 @@ public class Utils {
             availableButtons.add(3);
         }
         availableButtons.add(4);
+        availableButtons.add(5);
 
         Button currentButton;
         for (Integer availableButton : availableButtons) {
@@ -175,6 +187,8 @@ public class Utils {
                         loadWarehousePage(entityManagerFactory, user, anchorPane);
                     } else if (finalButton.getText().equals("Account")){
                         loadAccountPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Cart")){
+                        loadCartPage(entityManagerFactory, user, anchorPane);
                     }
                 } catch (IOException e){
                     System.out.println("Error in opening page from menu list.");
