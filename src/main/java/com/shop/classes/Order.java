@@ -7,23 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Cart {
+@Table(name = "Orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    private LocalDate dateCreated;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Product> products;
-
-    public Cart(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+    private String user;
+    private String products;
+    private LocalDate orderDate;
+    private double totalPrice;
 }

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 
@@ -17,7 +19,7 @@ import java.time.LocalDate;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    protected long ID;
 
     protected String name;
     protected String lastName;
@@ -31,6 +33,9 @@ public abstract class User {
     protected String phoneNumber;
     protected String address;
 
+    @OneToOne(orphanRemoval = true)
+    protected Cart cart;
+
     public User(String name, String lastName, String email, String username, String password, String userType, LocalDate birthDate, String phoneNumber, String address) {
         this.name = name;
         this.lastName = lastName;
@@ -41,5 +46,10 @@ public abstract class User {
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }

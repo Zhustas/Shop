@@ -5,13 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="689.0" prefWidth="1140.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.MainShopController">
+<AnchorPane fx:id="anchorPane" prefHeight="689.0" prefWidth="1485.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.MainShopController">
    <children>
       <Pane disable="true" layoutX="120.0" layoutY="90.0" prefHeight="90.0" prefWidth="739.0" style="-fx-background-color: #ffffff;" visible="false">
          <children>
@@ -50,7 +51,7 @@
             <TableColumn fx:id="productsColumnPrice" prefWidth="112.0" text="Price" />
         </columns>
       </TableView>
-      <Button layoutX="1020.0" layoutY="641.0" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #17bf25;" text="Add to cart">
+      <Button layoutX="1346.0" layoutY="639.0" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #17bf25;" text="Add to cart">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -63,5 +64,30 @@
             <Font name="Impact" size="45.0" />
          </font>
       </Text>
+      <TableView fx:id="commentsTable" layoutX="1020.0" layoutY="124.0" prefHeight="323.0" prefWidth="432.0">
+        <columns>
+          <TableColumn fx:id="commentsColumnComments" prefWidth="213.0" text="Comment" />
+          <TableColumn fx:id="commentsColumnPostedAt" prefWidth="107.0" text="Post date" />
+            <TableColumn fx:id="commentsColumnUser" prefWidth="111.0" text="User" />
+        </columns>
+      </TableView>
+      <Label layoutX="1023.0" layoutY="464.0" text="Leave a comment" textFill="#fff21f">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="commentField" layoutX="1020.0" layoutY="490.0" prefHeight="126.0" prefWidth="432.0" promptText="Enter comment">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="1023.0" layoutY="639.0" mnemonicParsing="false" onAction="#leaveAComment" style="-fx-background-color: #fff21f;" text="Leave a comment">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

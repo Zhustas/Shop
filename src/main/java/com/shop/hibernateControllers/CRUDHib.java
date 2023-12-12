@@ -20,6 +20,7 @@ public class CRUDHib {
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
+            System.out.println(entity);
         } catch (Exception e){
             System.out.println("Error in creating row in database");
         } finally {
@@ -27,6 +28,23 @@ public class CRUDHib {
                 em.close();
             }
         }
+    }
+
+    public <T> T createAndReturn(T entity){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+        } catch (Exception e){
+            System.out.println("Error in creating row in database");
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        }
+        return entity;
     }
 
     public <T> void update(T entity){

@@ -29,12 +29,22 @@ public class Product {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Warehouse> warehouseList;
 
+    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
+    public void addComment(Comment comment){
+        comments.add(comment);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
-                "title='" + title + '\'' +
+                "ID=" + ID +
+                ", title='" + title + '\'' +
                 ", price=" + price +
+                ", manufacturer='" + manufacturer + '\'' +
                 ", description='" + description + '\'' +
+                ", warehouseList=" + warehouseList +
                 '}';
     }
 }

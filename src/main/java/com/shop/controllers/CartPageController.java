@@ -10,11 +10,13 @@ import jakarta.persistence.EntityManagerFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +24,13 @@ public class CartPageController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
+    private Label totalPrice;
+    @FXML
     private TableView<Product> productsTable;
     @FXML
     private TableColumn<Product, String> productsColumnTitle, productsColumnDescription, productsColumnPrice;
     EntityManagerFactory entityManagerFactory;
     User user;
-    List<Product> productsInCart = new ArrayList<>();
     Product selectedProduct;
 
     public void setData(EntityManagerFactory entityManagerFactory, User user){
@@ -35,6 +38,7 @@ public class CartPageController {
         this.user = user;
 
         loadProductsInCart();
+        setTotalPrice();
 
         Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
@@ -46,26 +50,24 @@ public class CartPageController {
             return;
         }
 
+        Cart cart = UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID());
+        List<Product> products = cart.getProducts();
+        for (Product product : products){
+            if (product.getID() == selectedProduct.getID()){
+                products.remove(product);
+                break;
+            }
+        }
+
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         try {
-            crudHib.delete(Cart.class, getCartID(user.getID(), selectedProduct.getID()));
+            crudHib.update(cart);
         } catch (Exception e){
             Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Removing product", "Error in removing product from cart.");
         }
 
         loadProductsInCart();
-    }
-
-    private long getCartID(long userID, long productID){
-        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-
-        List<Cart> carts = utilsHib.getAllRecords(Cart.class);
-        for (Cart cart : carts){
-            if (cart.getUserID() == userID && cart.getProductID() == productID){
-                return cart.getID();
-            }
-        }
-        return 0;
+        setTotalPrice();
     }
 
     @FXML
@@ -74,21 +76,26 @@ public class CartPageController {
     }
 
     private void loadProductsInCart(){
-        if (!productsInCart.isEmpty()){
-            productsInCart.clear();
-        }
-
         productsColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         productsColumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         productsColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        List<Cart> carts = utilsHib.getAllRecords(Cart.class);
-        for (Cart cart : carts){
-            if (cart.getUserID() == user.getID()){
-                productsInCart.add(utilsHib.getEntityById(Product.class, cart.getProductID()));
-            }
+        Cart cart = UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID());
+
+        productsTable.setItems(FXCollections.observableList(cart.getProducts()));
+    }
+
+    private void setTotalPrice(){
+        List<Product> products = UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID()).getProducts();
+        double total = 0.0;
+        for (Product product : products){
+            total += product.getPrice();
         }
-        productsTable.setItems(FXCollections.observableList(productsInCart));
+        totalPrice.setText("Total price: " + String.valueOf(total));
+    }
+
+    @FXML
+    private void buy() throws IOException {
+        Utils.loadOrderPage(entityManagerFactory, user, anchorPane, UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID()).getProducts());
     }
 }

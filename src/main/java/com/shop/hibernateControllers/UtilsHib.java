@@ -61,11 +61,11 @@ public class UtilsHib {
         return results;
     }
 
-    public <T> T getEntityById(Class<T> entityClass, long ID){
+    public static <T> T getEntityById(EntityManagerFactory entityManagerFactory, Class<T> entityClass, long ID){
         T result = null;
         EntityManager em = null;
         try {
-            em = getEntityManager();
+            em = entityManagerFactory.createEntityManager();
             em.getTransaction().begin();
             result = em.find(entityClass, ID);
             em.getTransaction().commit();

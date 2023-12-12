@@ -1,6 +1,7 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
+import com.shop.classes.Cart;
 import com.shop.classes.Employee;
 import com.shop.classes.User;
 import com.shop.classes.Warehouse;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeePageController {
@@ -79,6 +81,11 @@ public class EmployeePageController {
         Employee newEmployee = getNewEmployeeFromFields();
 
         try {
+            Cart cart = new Cart(LocalDate.now());
+            crudHib.create(cart);
+
+            newEmployee.setCart(cart);
+
             crudHib.create(newEmployee);
             Utils.generateAlert(Alert.AlertType.INFORMATION, "Success", "Create employee", "Successfully created employee.");
         } catch (Exception e){
@@ -188,6 +195,7 @@ public class EmployeePageController {
         employee.setEmail(leftEmailField.getText());
         employee.setUsername(leftUsernameField.getText());
         employee.setPassword(Utils.encrypt(leftPasswordField.getText()));
+        employee.setUserType("Employee");
         employee.setSalary(Double.parseDouble(leftSalaryField.getText()));
 
         List<Warehouse> selectedWarehouses = leftWarehouseList.getSelectionModel().getSelectedItems();

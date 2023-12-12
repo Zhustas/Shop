@@ -3,6 +3,7 @@ package com.shop.controllers;
 import com.shop.Utils.Utils;
 import com.shop.Utils.UtilsChecking;
 import com.shop.classes.Administrator;
+import com.shop.classes.Cart;
 import com.shop.classes.Customer;
 import com.shop.classes.User;
 import com.shop.hibernateControllers.CRUDHib;
@@ -128,6 +129,10 @@ public class RegisterController {
 
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         try {
+            Cart cart = new Cart(LocalDate.now());
+            crudHib.create(cart);
+
+            user.setCart(cart);
             crudHib.create(user);
             Utils.generateAlert(Alert.AlertType.INFORMATION, "Registration", "User registration", "User successfully created.");
         } catch (Exception e){

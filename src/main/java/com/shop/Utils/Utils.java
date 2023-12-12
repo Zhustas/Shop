@@ -1,6 +1,8 @@
 package com.shop.Utils;
 
 import com.shop.StartGUI;
+import com.shop.classes.Order;
+import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.controllers.*;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import java.math.BigInteger;
@@ -140,6 +143,17 @@ public class Utils {
         cartPageController.setData(entityManagerFactory, user);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setTitle("Shop (cart)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadOrderPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane, List<Product> products) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("order.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        OrderController orderController = fxmlLoader.getController();
+        orderController.setData(entityManagerFactory, user, products);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Order");
         stage.setScene(scene);
         stage.show();
     }
