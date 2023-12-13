@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +19,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    private String user;
+    private long userID;
+    private String username;
     private String products;
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     private double totalPrice;
+
+    public Order(long userID, String username, String products, LocalDateTime orderDate, double totalPrice) {
+        this.userID = userID;
+        this.username = username;
+        this.products = products;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+    }
 }

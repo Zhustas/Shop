@@ -2,8 +2,10 @@ package com.shop.controllers;
 
 import com.shop.Utils.Utils;
 import com.shop.classes.Cart;
+import com.shop.classes.Order;
 import com.shop.classes.Product;
 import com.shop.classes.User;
+import com.shop.hibernateControllers.CRUDHib;
 import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.collections.FXCollections;
@@ -14,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderController {
@@ -62,8 +65,23 @@ public class OrderController {
             return;
         }
 
-        Utils.generateAlert(Alert.AlertType.INFORMATION, "Information", "Congratulations", "Your purchase was successful. We will start preparing delivery shortly.");
-        Utils.loadCartPage(entityManagerFactory, user, anchorPane);
+        String productsString = "";
+
+        double totalPrice = 0.0;
+        for (Product product : products){
+            totalPrice += product.getPrice();
+            productsString += (product.getID() + " " + product.getTitle() + " " + product.getPrice() + "\n");
+        }
+        Order order = new Order(user.getID(), user.getUsername(), productsString, LocalDateTime.now(), totalPrice);
+
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        try {
+            crudHib.create(order);
+            Utils.generateAlert(Alert.AlertType.INFORMATION, "Information", "Congratulations", "Your purchase was successful. We will start preparing delivery shortly.");
+            Utils.loadCartPageAfterPurchasing(entityManagerFactory, user, anchorPane);
+        } catch (Exception e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Attempt in purchasing", "There was an error while attempting to purchase.");
+        }
     }
 
     @FXML

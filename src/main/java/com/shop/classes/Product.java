@@ -32,6 +32,24 @@ public class Product {
     @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Comment> comments;
 
+    public void removeWarehouse(long ID){
+        for (Warehouse warehouse : warehouseList){
+            if (warehouse.getID() == ID){
+                warehouseList.remove(warehouse);
+                return;
+            }
+        }
+    }
+
+    public void removeComment(long ID){
+        for (Comment comment : comments){
+            if (comment.getID() == ID){
+                comments.remove(comment);
+                return;
+            }
+        }
+    }
+
     public void addComment(Comment comment){
         comments.add(comment);
     }

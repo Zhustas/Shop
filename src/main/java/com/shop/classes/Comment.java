@@ -22,7 +22,7 @@ public class Comment {
     private String comment;
     private LocalDate postedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User postedBy;
 
     public Comment(String comment, LocalDate postedAt, User postedBy) {

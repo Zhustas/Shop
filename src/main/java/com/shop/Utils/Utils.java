@@ -147,6 +147,17 @@ public class Utils {
         stage.show();
     }
 
+    public static void loadCartPageAfterPurchasing(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("cart.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        CartPageController cartPageController = fxmlLoader.getController();
+        cartPageController.setDataAfterPurchase(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (cart)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void loadOrderPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane, List<Product> products) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("order.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -154,6 +165,17 @@ public class Utils {
         orderController.setData(entityManagerFactory, user, products);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setTitle("Order");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadOrdersPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("order-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        OrderPageController orderPageController = fxmlLoader.getController();
+        orderPageController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (orders)");
         stage.setScene(scene);
         stage.show();
     }
@@ -168,7 +190,7 @@ public class Utils {
         anchorPane.getChildren().add(pane);
 
         double buttonX = 14;
-        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Cart"), new Button("Account")};
+        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Cart"), new Button("Account"), new Button("Orders")};
         String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
 
         ArrayList<Integer> availableButtons = new ArrayList<>();
@@ -184,6 +206,7 @@ public class Utils {
         }
         availableButtons.add(4);
         availableButtons.add(5);
+        availableButtons.add(6);
 
         Button currentButton;
         for (Integer availableButton : availableButtons) {
@@ -203,6 +226,8 @@ public class Utils {
                         loadAccountPage(entityManagerFactory, user, anchorPane);
                     } else if (finalButton.getText().equals("Cart")){
                         loadCartPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Orders")){
+                        loadOrdersPage(entityManagerFactory, user, anchorPane);
                     }
                 } catch (IOException e){
                     System.out.println("Error in opening page from menu list.");

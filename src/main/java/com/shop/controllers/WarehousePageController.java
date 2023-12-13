@@ -109,8 +109,37 @@ public class WarehousePageController {
             return;
         }
 
+        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
+
+        List<Employee> employees = utilsHib.getAllRecords(Employee.class);
+        for (Employee employee : employees){
+            for (Warehouse warehouse : employee.getWorksAtWarehouse()){
+                if (warehouse.getID() == selectedWarehouse.getID()){
+                    employee.removeWarehouse(selectedWarehouse.getID());
+                    break;
+                }
+            }
+        }
+
+        List<Product> products = utilsHib.getAllRecords(Product.class);
+        for (Product product : products){
+            for (Warehouse warehouse : product.getWarehouseList()){
+                if (warehouse.getID() == selectedWarehouse.getID()){
+                    product.removeWarehouse(selectedWarehouse.getID());
+                    break;
+                }
+            }
+        }
+
+
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         try {
+            for (Employee employee : employees){
+                crudHib.update(employee);
+            }
+            for (Product product : products){
+                crudHib.update(product);
+            }
             crudHib.delete(Warehouse.class, selectedWarehouse.getID());
             Utils.generateAlert(Alert.AlertType.WARNING, "Success", "Delete warehouse", "Successfully deleted warehouse.");
         } catch (Exception e){
@@ -118,6 +147,10 @@ public class WarehousePageController {
         }
 
         updateWarehousesTable();
+        clearRightFields();
+        selectedWarehouse = null;
+        employeesTable.setItems(FXCollections.emptyObservableList());
+        productsTable.setItems(FXCollections.emptyObservableList());
     }
 
     private void updateWarehousesTable(){

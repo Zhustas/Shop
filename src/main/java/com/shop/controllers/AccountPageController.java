@@ -2,17 +2,17 @@ package com.shop.controllers;
 
 import com.shop.Utils.Utils;
 import com.shop.Utils.UtilsChecking;
-import com.shop.classes.Administrator;
-import com.shop.classes.Customer;
-import com.shop.classes.Employee;
-import com.shop.classes.User;
+import com.shop.classes.*;
 import com.shop.hibernateControllers.CRUDHib;
+import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountPageController {
     @FXML
@@ -232,9 +232,35 @@ public class AccountPageController {
             return;
         }
 
-        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
+        List<Product> products = utilsHib.getAllRecords(Product.class);
 
+        List<Long> IDsToRemove = new ArrayList<>();
+        for (Product product : products){
+            for (Comment comment : product.getComments()){
+                if (comment.getPostedBy().getID() == user.getID()){
+                    //product.removeComment(comment.getID());
+                    IDsToRemove.add(comment.getID());
+                }
+            }
+            for (Long ID : IDsToRemove){
+                product.removeComment(ID);
+            }
+            IDsToRemove.clear();
+        }
+
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         try {
+            for (Product product : products){
+                crudHib.update(product);
+            }
+            List<Comment> comments = utilsHib.getAllRecords(Comment.class);
+            for (Comment comment : comments){
+                if (comment.getPostedBy().getID() == user.getID()){
+                    crudHib.delete(Comment.class, comment.getID());
+                }
+            }
+
             if (isType("Customer")) {
                 crudHib.delete(Customer.class, customer.getID());
             } else if (isType("Administrator")) {

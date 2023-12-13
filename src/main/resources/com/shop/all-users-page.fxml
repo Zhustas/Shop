@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.AllUsersController">
+   <children>
+      <TableView fx:id="ordersTable" layoutX="37.0" layoutY="127.0" prefHeight="496.0" prefWidth="891.0">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="62.0" text="ID" />
+            <TableColumn fx:id="productsColumn" prefWidth="593.0" text="Products" />
+            <TableColumn fx:id="dateColumn" prefWidth="130.0" text="Date" />
+            <TableColumn fx:id="totalPriceColumn" prefWidth="105.0" text="Total price" />
+         </columns>
+      </TableView>
+      <Text fill="#fff21f" layoutX="343.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your orders" underline="true">
+         <font>
+            <Font name="Impact" size="36.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

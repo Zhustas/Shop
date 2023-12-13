@@ -43,6 +43,28 @@ public class CartPageController {
         Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
 
+    public void setDataAfterPurchase(EntityManagerFactory entityManagerFactory, User user){
+        this.entityManagerFactory = entityManagerFactory;
+        this.user = user;
+
+        deleteAllItemsInCart();
+
+        Utils.determineMenu(entityManagerFactory, user, anchorPane);
+    }
+
+    private void deleteAllItemsInCart(){
+        Cart cart = UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID());
+        List<Product> products = cart.getProducts();
+        products.clear();
+
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        try {
+            crudHib.update(cart);
+        } catch (Exception e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Removing products", "Error in removing products from cart.");
+        }
+    }
+
     @FXML
     private void removeFromCart(){
         if (selectedProduct == null){

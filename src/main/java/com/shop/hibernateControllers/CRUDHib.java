@@ -22,6 +22,7 @@ public class CRUDHib {
             em.getTransaction().commit();
             System.out.println(entity);
         } catch (Exception e){
+            e.printStackTrace();
             System.out.println("Error in creating row in database");
         } finally {
             if (em != null){

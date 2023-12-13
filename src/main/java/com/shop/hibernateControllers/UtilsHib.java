@@ -61,6 +61,28 @@ public class UtilsHib {
         return results;
     }
 
+    public <T> List<T> getAllRecordsByID(Class<T> entityClass, long id){
+        EntityManager em = null;
+        List<T> results = new ArrayList<>();
+        try {
+            em = getEntityManager();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Object> query = em.getCriteriaBuilder().createQuery();
+            Root<T> root = query.from(entityClass);
+            //query.select(root).where(cb.and(cb.like(root.get("username"), username), cb.like(root.get("password"), password)));
+            query.select(root).where(cb.equal(root.get("userID"), id));
+            Query q = em.createQuery(query);
+            results = q.getResultList();
+        } catch (Exception e){
+            System.out.println("Error in getting all records.");
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        }
+        return results;
+    }
+
     public static <T> T getEntityById(EntityManagerFactory entityManagerFactory, Class<T> entityClass, long ID){
         T result = null;
         EntityManager em = null;

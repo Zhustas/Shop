@@ -33,6 +33,15 @@ public class Employee extends User {
         this.salary = salary;
     }
 
+    public void removeWarehouse(long ID){
+        for (Warehouse warehouse : worksAtWarehouse){
+            if (warehouse.getID() == ID){
+                worksAtWarehouse.remove(warehouse);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return name + " " + lastName + ", " + email;

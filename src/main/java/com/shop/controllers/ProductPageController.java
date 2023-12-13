@@ -56,7 +56,8 @@ public class ProductPageController {
 
         leftWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         rightWarehouseList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        loadWarehouseList();
+
+        loadLeftWarehouseList();
         updateProductsTable();
 
         Utils.determineMenu(entityManagerFactory, user, anchorPane);
@@ -177,6 +178,7 @@ public class ProductPageController {
         rightDescriptionField.setText(selectedProduct.getDescription());
 
         deselectRightWarehouseList();
+        loadRightWarehouseList();
         for (Warehouse w : selectedProduct.getWarehouseList()){
             for (int i = 0; i < rightWarehouseList.getItems().size(); i++){
                 if (w.getID() == rightWarehouseList.getItems().get(i).getID()){
@@ -279,12 +281,15 @@ public class ProductPageController {
         return newProduct;
     }
 
-    private void loadWarehouseList(){
+    private void loadLeftWarehouseList(){
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
         List<Warehouse> warehouses = utilsHib.getAllRecords(Warehouse.class);
 
         leftWarehouseList.setItems(FXCollections.observableList(warehouses));
-        rightWarehouseList.setItems(FXCollections.observableList(warehouses));
+    }
+
+    private void loadRightWarehouseList(){
+        rightWarehouseList.setItems(FXCollections.observableList(selectedProduct.getWarehouseList()));
     }
 
     @FXML
