@@ -22,6 +22,3 @@ public class StartGUI extends Application {
         launch();
     }
 }
-// TODO:
-//      - Add product representation in 'main shop' window. : NOT DONE
-//      -- Fix 'cart page', table showing all products but not user's selected products in cart. : NOT DONE

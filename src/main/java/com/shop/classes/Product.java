@@ -29,7 +29,8 @@ public class Product {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Warehouse> warehouseList;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> comments;
 
     public void removeWarehouse(long ID){

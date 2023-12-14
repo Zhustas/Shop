@@ -21,7 +21,6 @@ public class Comment {
 
     private String comment;
     private LocalDate postedAt;
-
     @ManyToOne
     private User postedBy;
 
