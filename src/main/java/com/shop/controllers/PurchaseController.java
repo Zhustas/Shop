@@ -1,12 +1,8 @@
 package com.shop.controllers;
 
 import com.shop.Utils.Utils;
-import com.shop.classes.Cart;
-import com.shop.classes.Order;
 import com.shop.classes.Product;
 import com.shop.classes.User;
-import com.shop.hibernateControllers.CRUDHib;
-import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -16,10 +12,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderController {
+public class PurchaseController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -31,27 +26,23 @@ public class OrderController {
     @FXML
     private TextField cvcField;
     @FXML
-    private TableView<Product> productsTable;
-    @FXML
-    private TableColumn<Product, String> titleColumn, descriptionColumn, priceColumn;
+    private ListView<String> productsList;
 
     EntityManagerFactory entityManagerFactory;
     User user;
-    List<Product> products;
-    public void setData(EntityManagerFactory entityManagerFactory, User user, List<Product> products){
+    String products;
+    long orderID;
+    public void setData(EntityManagerFactory entityManagerFactory, User user, String products, long ID){
         this.entityManagerFactory = entityManagerFactory;
         this.user = user;
         this.products = products;
+        this.orderID = ID;
 
         loadProducts();
     }
 
     private void loadProducts(){
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        productsTable.setItems(FXCollections.observableList(products));
+        productsList.getItems().add(products);
     }
 
     @FXML
@@ -61,18 +52,19 @@ public class OrderController {
 
     @FXML
     private void pay() throws IOException {
-        if (!canPay()){
-            return;
+        if (canPay()){
+            Utils.generateAlert(Alert.AlertType.INFORMATION, "Information", "Congratulations", "Your purchase was successful. We will start preparing delivery shortly.");
+            Utils.loadOrdersPageAfterPurchasing(entityManagerFactory, user, anchorPane, orderID);
         }
 
-        String productsString = "";
+        /*String productsString = "";
 
         double totalPrice = 0.0;
         for (Product product : products){
             totalPrice += product.getPrice();
             productsString += (product.getID() + " " + product.getTitle() + " " + product.getPrice() + "\n");
         }
-        Order order = new Order(user.getID(), user.getUsername(), productsString, LocalDateTime.now(), totalPrice);
+        Order order = new Order(user.getID(), user.getUsername(), productsString, LocalDateTime.now(), totalPrice, );
 
         CRUDHib crudHib = new CRUDHib(entityManagerFactory);
         try {
@@ -81,12 +73,12 @@ public class OrderController {
             Utils.loadCartPageAfterPurchasing(entityManagerFactory, user, anchorPane);
         } catch (Exception e){
             Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Attempt in purchasing", "There was an error while attempting to purchase.");
-        }
+        }*/
     }
 
     @FXML
     private void cancel() throws IOException {
-        Utils.loadCartPage(entityManagerFactory, user, anchorPane);
+        Utils.loadOrdersPage(entityManagerFactory, user, anchorPane);
     }
 
     private boolean canPay(){

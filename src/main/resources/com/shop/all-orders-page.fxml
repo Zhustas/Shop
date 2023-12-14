@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="1654.0" style="-fx-background-color: #49566b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shop.controllers.AllOrdersController">
+    <children>
+        <Text fill="#fff21f" layoutX="27.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All orders" underline="true">
+            <font>
+                <Font name="Impact" size="36.0" />
+            </font>
+        </Text>
+        <TableView fx:id="ordersTable" layoutX="27.0" layoutY="117.0" onMouseClicked="#handleRowSelected" prefHeight="496.0" prefWidth="843.0">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="62.0" text="ID" />
+                <TableColumn fx:id="productsColumn" prefWidth="444.0" text="Products" />
+                <TableColumn fx:id="dateColumn" prefWidth="101.0" text="Date" />
+                <TableColumn fx:id="totalPriceColumn" prefWidth="130.0" text="Total price" />
+                <TableColumn fx:id="statusColumn" prefWidth="105.0" text="Status" />
+            </columns>
+        </TableView>
+        <Button layoutX="902.0" layoutY="580.0" mnemonicParsing="false" onAction="#cancelOrder" style="-fx-background-color: #fff21f;" text="Cancel">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Button>
+        <ChoiceBox fx:id="statusChoiceBox" layoutX="907.0" layoutY="448.0" prefHeight="25.0" prefWidth="197.0" />
+        <Label layoutX="909.0" layoutY="420.0" text="Status" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="907.0" layoutY="118.0" text="Date" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="905.0" layoutY="159.0" text="from" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="924.0" layoutY="203.0" text="to" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="minPriceField" layoutX="956.0" layoutY="288.0" prefHeight="34.0" prefWidth="125.0" promptText="Min price">
+            <font>
+                <Font name="Calibri" size="16.0" />
+            </font>
+        </TextField>
+        <TextField fx:id="maxPriceField" layoutX="956.0" layoutY="332.0" prefHeight="34.0" prefWidth="125.0" promptText="Max price">
+            <font>
+                <Font name="Calibri" size="16.0" />
+            </font>
+        </TextField>
+        <Label layoutX="911.0" layoutY="253.0" text="Total price" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="909.0" layoutY="294.0" text="Min" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="909.0" layoutY="338.0" text="Max" textFill="#fff21f">
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Label>
+        <Button layoutX="1039.0" layoutY="486.0" mnemonicParsing="false" onAction="#filterOrders" style="-fx-background-color: #fff21f;" text="Filter">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Button>
+        <Button layoutX="911.0" layoutY="486.0" mnemonicParsing="false" onAction="#clearFields" style="-fx-background-color: #eb2f42;" text="Clear fields">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Calibri" size="18.0" />
+            </font>
+        </Button>
+        <DatePicker fx:id="fromDateField" editable="false" layoutX="958.0" layoutY="153.0" prefHeight="35.0" prefWidth="146.0" />
+        <Button layoutX="1019.0" layoutY="116.0" mnemonicParsing="false" onAction="#clearDates" style="-fx-background-color: #fff21f;" text="Clear dates">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Calibri" size="14.0" />
+            </font>
+        </Button>
+        <DatePicker fx:id="toDateField" editable="false" layoutX="958.0" layoutY="197.0" prefHeight="35.0" prefWidth="146.0" />
+        <Button layoutX="1019.0" layoutY="413.0" mnemonicParsing="false" onAction="#clearStatus" style="-fx-background-color: #fff21f;" text="Clear status">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font name="Calibri" size="14.0" />
+            </font>
+        </Button>
+      <LineChart fx:id="lineChart" layoutX="1124.0" layoutY="150.0" style="-fx-background-color: #ffffff;" title="Chart">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Label fx:id="highestDay" layoutX="1124.0" layoutY="586.0" text="Sales" textFill="#fff21f" visible="false">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="highestOrdersDay" layoutX="1124.0" layoutY="620.0" text="Orders" textFill="#fff21f" visible="false">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="989.0" layoutY="580.0" mnemonicParsing="false" onAction="#deleteOrder" style="-fx-background-color: #eb2f42;" text="Delete">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>

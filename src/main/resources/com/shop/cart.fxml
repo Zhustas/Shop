@@ -36,7 +36,7 @@
             <Font name="Calibri" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="1022.0" layoutY="639.0" mnemonicParsing="false" onAction="#buy" style="-fx-background-color: #17bf25;" text="Buy">
+      <Button layoutX="982.0" layoutY="639.0" mnemonicParsing="false" onAction="#makeAnOrder" style="-fx-background-color: #17bf25;" text="Make an order">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

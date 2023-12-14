@@ -24,12 +24,14 @@ public class Order {
     private String products;
     private LocalDateTime orderDate;
     private double totalPrice;
+    private String status;
 
-    public Order(long userID, String username, String products, LocalDateTime orderDate, double totalPrice) {
+    public Order(long userID, String username, String products, LocalDateTime orderDate, double totalPrice, String status) {
         this.userID = userID;
         this.username = username;
         this.products = products;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
+        this.status = status;
     }
 }

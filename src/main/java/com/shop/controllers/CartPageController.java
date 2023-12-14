@@ -2,6 +2,7 @@ package com.shop.controllers;
 
 import com.shop.Utils.Utils;
 import com.shop.classes.Cart;
+import com.shop.classes.Order;
 import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.hibernateControllers.CRUDHib;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,15 +41,6 @@ public class CartPageController {
 
         loadProductsInCart();
         setTotalPrice();
-
-        Utils.determineMenu(entityManagerFactory, user, anchorPane);
-    }
-
-    public void setDataAfterPurchase(EntityManagerFactory entityManagerFactory, User user){
-        this.entityManagerFactory = entityManagerFactory;
-        this.user = user;
-
-        deleteAllItemsInCart();
 
         Utils.determineMenu(entityManagerFactory, user, anchorPane);
     }
@@ -113,11 +106,38 @@ public class CartPageController {
         for (Product product : products){
             total += product.getPrice();
         }
-        totalPrice.setText("Total price: " + String.valueOf(total));
+        totalPrice.setText("Total price: " + total);
     }
 
     @FXML
     private void buy() throws IOException {
-        Utils.loadOrderPage(entityManagerFactory, user, anchorPane, UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID()).getProducts());
+        //Utils.loadOrderPage(entityManagerFactory, user, anchorPane, UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID()).getProducts());
+    }
+
+    @FXML
+    private void makeAnOrder(){
+        List<Product> productsInCart = UtilsHib.getEntityById(entityManagerFactory, Cart.class, user.getCart().getID()).getProducts();
+        if (productsInCart.isEmpty()){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Attempt in making an order", "Zero product selected to make an order.");
+            return;
+        }
+
+        String productsString = "";
+
+        double totalPrice = 0.0;
+        for (Product product : productsInCart){
+            totalPrice += product.getPrice();
+            productsString += (product.getID() + " " + product.getTitle() + " " + product.getPrice() + "\n");
+        }
+
+        CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+        try {
+            crudHib.create(new Order(user.getID(), user.getUsername(), productsString, LocalDateTime.now(), totalPrice, "Waiting for payment"));
+            deleteAllItemsInCart();
+            loadProductsInCart();
+            Utils.generateAlert(Alert.AlertType.INFORMATION, "Success", "Order made", "Order was made. Act on your order in order's page.");
+        } catch (Exception e){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Attempt in making an order", "There was an error while making an order.");
+        }
     }
 }

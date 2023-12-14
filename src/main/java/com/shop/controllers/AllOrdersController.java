@@ -8,6 +8,8 @@ import com.shop.hibernateControllers.UtilsHib;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -17,8 +19,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class OrderPageController {
+public class AllOrdersController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -32,6 +35,13 @@ public class OrderPageController {
     private TextField minPriceField, maxPriceField;
     @FXML
     private ChoiceBox<String> statusChoiceBox;
+
+    @FXML
+    private LineChart<String, Number> lineChart;
+
+    @FXML
+    private Label highestDay, highestOrdersDay;
+
     private LocalDate fromDate, toDate;
     private double minPrice, maxPrice;
     private String selectedStatus;
@@ -76,7 +86,7 @@ public class OrderPageController {
 
     private void getOrders(){
         UtilsHib utilsHib = new UtilsHib(entityManagerFactory);
-        orders = utilsHib.getAllRecordsByID(Order.class, user.getID());
+        orders = utilsHib.getAllRecords(Order.class);
     }
 
     private void loadOrdersTable(){
@@ -107,8 +117,8 @@ public class OrderPageController {
         }
 
         String status = selectedOrder.getStatus();
-        if (status.equals("Delivered") || status.equals("Canceled")){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Selected order", "Can't cancel delivered or already canceled order.");
+        if (status.equals("Delivered") || status.equals("Canceled") || status.equals("In progress")){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Selected order", "Can't cancel delivered, in progress or already canceled order.");
             return;
         }
 
@@ -124,18 +134,24 @@ public class OrderPageController {
     }
 
     @FXML
-    private void payOrder() throws IOException {
+    private void deleteOrder(){
         if (selectedOrder == null){
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Order select", "No order selected to pay for.");
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Order select", "No order selected to delete.");
             return;
         }
 
         String status = selectedOrder.getStatus();
-        if (status.equals("Waiting for payment")){
-            Utils.loadPurchasePage(entityManagerFactory, user, anchorPane, selectedOrder.getProducts(), selectedOrder.getID());
-            //Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Selected order", "Can't cancel delivered or already canceled order.");
-        } else {
-            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Paying", "Order is either canceled, delivered or paid.");
+        if (status.equals("Delivered") || status.equals("In progress")){
+            Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Selected order", "Can't delete delivered or in progress order.");
+            return;
+        }
+
+        if (Utils.generateDialogBox(Alert.AlertType.CONFIRMATION, "Delete", "Delete order", "Are you sure you want to delete an order?")){
+            CRUDHib crudHib = new CRUDHib(entityManagerFactory);
+            crudHib.delete(Order.class, selectedOrder.getID());
+
+            getOrders();
+            loadOrdersTable();
         }
     }
 
@@ -152,8 +168,65 @@ public class OrderPageController {
         statusChoiceBox.getSelectionModel().clearSelection();
     }
 
+    private void loadDateChart(List<Order> dateOrders){
+        lineChart.getData().clear();
+        lineChart.setTitle("Sales from " + fromDate + " to " + toDate);
+
+        LocalDate highestSellingDay = null, highestOrderMakeDay = null;
+        double highestSellingSales = 0.0;
+        int highestOrderCount = 0, maxHighestOrderCount = 0;
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        LocalDate current = fromDate;
+        double total = 0.0;
+        boolean atLeastOne = false;
+        while (current.isBefore(toDate.plusDays(1))){
+            for (Order order : dateOrders){
+                if (order.getStatus().equals("Delivered") || order.getStatus().equals("In progress")){
+                    if (order.getOrderDate().toLocalDate().toString().equals(current.toString())){
+                        total += order.getTotalPrice();
+                        highestOrderCount++;
+                        atLeastOne = true;
+                    }
+                }
+            }
+            if (total >= highestSellingSales){
+                highestSellingSales = total;
+                highestSellingDay = current;
+            }
+            if (highestOrderCount >= maxHighestOrderCount){
+                maxHighestOrderCount = highestOrderCount;
+                highestOrderMakeDay = current;
+            }
+            series.getData().add(new XYChart.Data<>(current.toString(), total));
+            current = current.plusDays(1);
+            total = 0.0;
+            highestOrderCount = 0;
+        }
+        lineChart.getData().add(series);
+
+        if (atLeastOne){
+            highestDay.setVisible(true);
+            highestDay.setText("Highest sales was in " + highestSellingDay + ", with " + highestSellingSales);
+            highestOrdersDay.setVisible(true);
+            highestOrdersDay.setText("Highest orders made was in " + highestOrderMakeDay + ", with " + maxHighestOrderCount);
+        }
+    }
+
+    private boolean onlyDatesSelected(){
+        return !bothDatesNull() && bothPricesEmpty() && statusEmpty();
+    }
+
+    private void clearLineChart(){
+        lineChart.getData().clear();
+        lineChart.setTitle("Chart");
+        highestDay.setVisible(false);
+        highestOrdersDay.setVisible(false);
+    }
+
     @FXML
     private void filterOrders(){
+        clearLineChart();
         setDates();
         setPrices();
         setStatus();
@@ -180,6 +253,10 @@ public class OrderPageController {
                 Utils.generateAlert(Alert.AlertType.ERROR, "Error", "Date select", "Interval for date must be chosen.");
                 return;
             }
+        }
+        if (onlyDatesSelected()){
+            loadDateChart(newOrders);
+            return;
         }
 
         List<Order> fromWhichOrders = orders;

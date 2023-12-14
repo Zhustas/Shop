@@ -1,20 +1,16 @@
 package com.shop.Utils;
 
 import com.shop.StartGUI;
-import com.shop.classes.Order;
 import com.shop.classes.Product;
 import com.shop.classes.User;
 import com.shop.controllers.*;
 import jakarta.persistence.EntityManagerFactory;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -147,22 +143,22 @@ public class Utils {
         stage.show();
     }
 
-    public static void loadCartPageAfterPurchasing(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("cart.fxml"));
+    public static void loadOrdersPageAfterPurchasing(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane, long ID) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("order-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        CartPageController cartPageController = fxmlLoader.getController();
-        cartPageController.setDataAfterPurchase(entityManagerFactory, user);
+        OrderPageController orderPageController = fxmlLoader.getController();
+        orderPageController.setDataAfterPurchase(entityManagerFactory, user, ID);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setTitle("Shop (cart)");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void loadOrderPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane, List<Product> products) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("order.fxml"));
+    public static void loadPurchasePage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane, String products, long ID) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("purchase-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        OrderController orderController = fxmlLoader.getController();
-        orderController.setData(entityManagerFactory, user, products);
+        PurchaseController purchaseController = fxmlLoader.getController();
+        purchaseController.setData(entityManagerFactory, user, products, ID);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setTitle("Order");
         stage.setScene(scene);
@@ -175,7 +171,29 @@ public class Utils {
         OrderPageController orderPageController = fxmlLoader.getController();
         orderPageController.setData(entityManagerFactory, user);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
-        stage.setTitle("Shop (orders)");
+        stage.setTitle("Shop (my orders)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadUsersPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("all-users-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AllUsersController allUsersController = fxmlLoader.getController();
+        allUsersController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (users)");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void loadAllOrdersPage(EntityManagerFactory entityManagerFactory, User user, AnchorPane anchorPane) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartGUI.class.getResource("all-orders-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AllOrdersController allOrdersController = fxmlLoader.getController();
+        allOrdersController.setData(entityManagerFactory, user);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setTitle("Shop (all orders)");
         stage.setScene(scene);
         stage.show();
     }
@@ -190,7 +208,7 @@ public class Utils {
         anchorPane.getChildren().add(pane);
 
         double buttonX = 14;
-        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Cart"), new Button("Account"), new Button("Orders")};
+        Button[] buttons = {new Button("Shop"), new Button("Employees"), new Button("Products"), new Button("Warehouses"), new Button("Cart"), new Button("Account"), new Button("My Orders"), new Button("Users"), new Button("All orders")};
         String buttonStyle = "-fx-font: 16 Calibri; -fx-background-color: #5089e6; -fx-cursor: hand;";
 
         ArrayList<Integer> availableButtons = new ArrayList<>();
@@ -203,6 +221,8 @@ public class Utils {
         } else if (user.getUserType().equals("Employee")){
             availableButtons.add(2);
             availableButtons.add(3);
+            availableButtons.add(7);
+            availableButtons.add(8);
         }
         availableButtons.add(4);
         availableButtons.add(5);
@@ -226,8 +246,12 @@ public class Utils {
                         loadAccountPage(entityManagerFactory, user, anchorPane);
                     } else if (finalButton.getText().equals("Cart")){
                         loadCartPage(entityManagerFactory, user, anchorPane);
-                    } else if (finalButton.getText().equals("Orders")){
+                    } else if (finalButton.getText().equals("My Orders")){
                         loadOrdersPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("Users")){
+                        loadUsersPage(entityManagerFactory, user, anchorPane);
+                    } else if (finalButton.getText().equals("All orders")){
+                        loadAllOrdersPage(entityManagerFactory, user, anchorPane);
                     }
                 } catch (IOException e){
                     System.out.println("Error in opening page from menu list.");
